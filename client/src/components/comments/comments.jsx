@@ -12,7 +12,10 @@ import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:5001");
+
+const socket = io.connect(
+  new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
+);
 
 export default function Comments() {
   const { comments, post } = useLoaderData();
