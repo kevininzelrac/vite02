@@ -1,0 +1,38 @@
+.editor .floatLeft,
+.readOnly .floatLeft {
+  float: left;
+}
+/* .editor .floatLeft::after,
+.readOnly .floatLeft::after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: left;
+  height: 0;
+  overflow: auto;
+} */
+
+.editor .floatRight,
+.readOnly .floatRight {
+  float: right;
+}
+/* .editor .floatRight::after,
+.readOnly .floatRight::after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: left;
+  height: 0;
+} */
+
+/* .editor .none,
+.readOnly .none {
+  float: none;
+} */
+
+.editor .clearBoth,
+.readOnly .clearBoth {
+  clear: both;
+}

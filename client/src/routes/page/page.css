@@ -1,0 +1,10 @@
+main {
+  width: 620px;
+  margin-top: 20px;
+  z-index: 0;
+  /* animation-name: close; */
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}

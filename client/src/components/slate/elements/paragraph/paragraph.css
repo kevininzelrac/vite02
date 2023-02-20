@@ -1,0 +1,16 @@
+.editor .paragraph,
+.readOnly .paragraph {
+  position: relative;
+  max-width: 100%;
+  min-height: fit-content;
+  z-index: 0;
+}
+
+.editor .paragraph p,
+.readOnly .paragraph p {
+  position: relative;
+  cursor: text;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,112 @@
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+nav > :first-child {
+  border-top-left-radius: 10px;
+}
+nav > :first-child > :first-child {
+  border-top-left-radius: 10px;
+}
+nav > :last-child {
+  border-top-right-radius: 10px;
+}
+nav > :last-child > :first-child {
+  border-top-right-radius: 10px;
+}
+
+/* nav a,
+nav .dropdown .menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  width: var(--width);
+  height: var(--height);
+  padding: var(--padding);
+  text-decoration: none;
+  background-color: var(--anthracite);
+  transition: background-color 0.2s ease;
+  font-size: 10px;
+  font-weight: 400;
+  color: ghostwhite;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--shade01);
+}
+
+nav .dropdown .menu {
+  cursor: s-resize;
+}
+
+nav .dropdown .dropdown .menu {
+  cursor: e-resize;
+}
+nav .dropdown .dropdown .menu svg {
+  rotate: 270deg;
+}
+
+nav a:hover,
+nav .dropdown .menu:hover {
+  background-color: black;
+}
+
+nav a.active {
+   background: linear-gradient(
+    180deg,
+    rgba(51, 102, 153, 1) 50%,
+    rgba(51, 83, 153, 1) 100%
+  );
+}
+
+nav .menu.active {
+  background-color: black;
+}
+
+nav .menu.active svg {
+  stroke-width: 2px;
+  stroke: var(--blue);
+}
+
+nav .dropdown {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+nav .dropdown .item {
+  position: absolute;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-30px);
+  transition: opacity 100ms ease-in, transform 200ms ease-in,
+    visibility 200ms ease-in;
+}
+
+nav .dropdown .item {
+  margin-top: 25px;
+}
+nav .dropdown .dropdown .item {
+  margin-top: 0;
+  margin-left: var(--width);
+  transform: translateY(0px);
+  transform: translateX(-30px);
+}
+
+nav .dropdown:hover > .item {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+  transform: translateX(0px);
+} */

@@ -1,0 +1,5 @@
+.editor .circle,
+.readOnly .circle {
+  border-radius: 50%;
+  shape-outside: circle();
+}

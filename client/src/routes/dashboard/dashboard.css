@@ -1,0 +1,11 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 1;
+  width: 600px;
+  height: 600px;
+  background-color: ghostwhite;
+  padding: 10px;
+}

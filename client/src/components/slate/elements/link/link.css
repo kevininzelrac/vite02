@@ -1,0 +1,8 @@
+.editor a,
+.readOnly a {
+  color: var(--blue);
+}
+
+/* .editor a:visited {
+  color: firebrick;
+} */

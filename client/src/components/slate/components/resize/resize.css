@@ -1,0 +1,19 @@
+.editor .resize {
+  position: absolute;
+  width: 28px;
+  height: fit-content;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  background-color: var(--anthracite);
+  color: ghostwhite;
+  z-index: 1;
+}
+.editor .resize div {
+  width: 23px;
+  height: fit-content;
+  text-align: right;
+}

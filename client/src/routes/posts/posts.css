@@ -1,0 +1,75 @@
+main article {
+  display: block;
+  width: var(--sectionWidth);
+  margin: 30px auto 90px;
+  /* margin-top: 2rem; */
+  animation-fill-mode: forwards;
+}
+
+main article a,
+main article a:visited {
+  text-decoration: none;
+  color: var(--blue);
+  font-style: italic;
+}
+
+main article header {
+  width: 100%;
+  height: fit-content;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  align-items: baseline;
+  display: flex;
+}
+
+main article header h2 {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 1rem 0 0;
+  padding: 0;
+  text-transform: capitalize;
+}
+main article header span {
+  display: inline;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 0.4rem 0 0;
+  padding: 0;
+  text-transform: none;
+  color: var(--darkGrey);
+  font-size: clamp(11px, 0.8rem, 30px);
+}
+main article header time {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 0 0 0;
+  padding: 0;
+  text-transform: none;
+  color: var(--darkGrey);
+  font-size: clamp(11px, 0.8rem, 30px);
+}
+main article img {
+  border-radius: 50%;
+  shape-outside: circle();
+  float: left;
+  margin: 10px 10px 0 0;
+  width: clamp(140px, 40vw, 160px);
+}
+
+main article p {
+  width: 100%;
+  /* min-height: 160px; */
+  height: fit-content;
+  margin-top: 1rem;
+}
+
+main article p::after {
+  content: "";
+  clear: both;
+}
+
+@media only screen and (max-width: 700px) {
+  main article header {
+    display: block;
+  }
+}

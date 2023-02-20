@@ -1,0 +1,4 @@
+.editor .breakLine,
+.readOnly .breakLine {
+  clear: both;
+}

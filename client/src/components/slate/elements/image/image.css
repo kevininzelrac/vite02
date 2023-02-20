@@ -1,0 +1,32 @@
+.editor .image,
+.readOnly .image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* min-width: 139px;
+  min-height: 139px;
+  max-width: 600px;
+  max-height: 600px; */
+  box-shadow: var(--shade01);
+  margin: 6px;
+  z-index: 1;
+}
+
+.editor .image img,
+.readOnly .image img {
+  position: relative;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  cursor: text;
+}
+
+/* iPHONE LANDSCAPE DIMENSION */
+@media only screen and (max-width: 670px) {
+  .editor .image,
+  .readOnly .image {
+    min-width: 46%;
+    max-width: 100%;
+  }
+}

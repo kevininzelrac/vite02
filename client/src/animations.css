@@ -1,0 +1,67 @@
+/* //////////////////////////*/
+/*      UP / DOWN           */
+@keyframes slideUp {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+/* //////////////////////////*/
+/*      LEFT / RIGHT        */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0%);
+    /* opacity: 1; */
+  }
+  100% {
+    transform: translateX(-100%);
+    /* opacity: 0; */
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(-100%);
+    /* opacity: 0; */
+  }
+  100% {
+    transform: translateX(0%);
+    /* opacity: 1; */
+  }
+}
+
+/* //////////////////////////*/
+/*      FADE IN / FADE OUT        */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

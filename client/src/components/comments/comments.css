@@ -1,0 +1,98 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  margin: 20px 0;
+
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.comments .comment {
+}
+
+.comments .comment .comment {
+  margin-left: 33px;
+  border-left: 1px solid lightgray;
+}
+
+.comments .comment section {
+  z-index: 0;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-self: flex-start;
+  width: fit-content;
+  margin: 5px 0 5px 0;
+  padding: 0;
+}
+.comments .comment section img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin: 3px;
+}
+.comments .comment section div {
+  /*  */
+}
+.comments .comment section div span {
+  display: block;
+  background-color: rgba(235, 237, 239, 1);
+  border-radius: 9px;
+  padding: 6px;
+}
+
+.comments .comment section div span h2 {
+  font-size: small;
+  margin: 0;
+  padding: 0;
+}
+
+.comments .comment section div span p {
+  font-size: small;
+  margin: 0;
+  padding: 0;
+}
+.comments .comment section form {
+  display: inline;
+}
+.comments .comment section .likes {
+  position: absolute;
+  right: -16px;
+  top: -4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+.comments .comment section .likes svg {
+  background-color: #336699;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  padding: 5px;
+  margin-right: 2px;
+  color: ghostwhite;
+  border: 2px solid ghostwhite;
+  /* box-shadow: var(--shade01); */
+}
+
+.comments .comment section div time {
+  font-size: small;
+  color: grey;
+  margin: 0 6px 0 0;
+  padding: 0;
+}
+
+.comments button {
+  border: none;
+  background-color: transparent;
+  color: grey;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 3px;
+}

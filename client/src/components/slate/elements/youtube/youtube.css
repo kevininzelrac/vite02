@@ -1,0 +1,35 @@
+.editor .youtube,
+.readOnly .youtube {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  width: fit-content;
+  height: fit-content;
+  max-width: 100%;
+}
+
+.editor .youtube iframe,
+.readOnly .youtube iframe {
+  position: relative;
+  border-radius: inherit;
+  cursor: text;
+  border: none;
+}
+
+.editor .youtube iframe {
+  pointer-events: none;
+}
+
+@media only screen and (max-width: 500px) {
+  .editor .youtube,
+  .readOnly .youtube {
+    max-width: 100%;
+    /* margin: 0 auto; */
+  }
+  .editor .youtube iframe,
+  .readOnly .youtube iframe {
+    max-width: 100%;
+  }
+}

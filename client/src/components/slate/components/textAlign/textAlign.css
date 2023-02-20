@@ -1,0 +1,16 @@
+.editor .textAlignLeft,
+.readOnly .textAlignLeft {
+  text-align: left;
+}
+.editor .textAlignRight,
+.readOnly .textAlignRight {
+  text-align: right;
+}
+.editor .textAlignCenter,
+.readOnly .textAlignCenter {
+  text-align: center;
+}
+.editor .textAlignJustify,
+.readOnly .textAlignJustify {
+  text-align: justify;
+}

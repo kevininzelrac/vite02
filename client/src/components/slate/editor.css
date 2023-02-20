@@ -1,0 +1,71 @@
+.editor,
+.readOnly {
+  position: relative;
+  width: var(--sectionWidth);
+  /* padding: 0;
+  margin: 0; */
+  /* overflow: auto; */
+  /* display: block; */
+  z-index: 0;
+  clear: both;
+}
+.editor {
+  box-shadow: 0 0 0 1px lightgray;
+}
+
+.editor::after,
+.readOnly::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.editor h2:hover,
+.editor h3:hover,
+.editor p:hover {
+  /* background-color: #e8e8e8; */
+}
+.editor .image img:hover,
+.editor div iframe:hover {
+  opacity: 0.9;
+}
+
+/* VOID TOOLS */
+.editor .tools {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: -33px;
+  left: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  user-select: none;
+  background-color: var(--anthracite);
+  color: ghostwhite;
+  z-index: 1;
+}
+.editor .tools button {
+  position: relative;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  background-color: var(--anthracite);
+  color: ghostwhite;
+}
+.editor .tools button:hover,
+.editor .resize:hover {
+  background-color: black;
+}
+.editor .tools > button.active {
+  background: var(--gradient01);
+}
+/* iPHONE LANDSCAPE DIMENSION */
+/* @media only screen and (max-width: 670px) {
+  .editor,
+  .readOnly {
+    max-width: 90%;
+    border: 1px dotted red;
+  }
+}
+ */

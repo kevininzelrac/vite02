@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Gruppo&family=Major+Mono+Display&family=Orbitron&display=swap");
+
+:root {
+  --width: 90px;
+  --height: 20px;
+
+  --margin: 2px 10px;
+  --padding: 4px 0px;
+
+  --rootW: 600px;
+
+  --anthracite: #292929;
+  --blue: #336699;
+  --shade01: 0px 5px 20px rgba(22, 22, 22, 0.4);
+  --gradient01: linear-gradient(#336699, #132140);
+
+  --orbitron: "Orbitron", sans-serif;
+  --audiowide: "Audiowide", cursive;
+  --majormono: "Major Mono Display", monospace;
+  --gruppo: "Gruppo", cursive;
+}

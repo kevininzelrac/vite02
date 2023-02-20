@@ -1,0 +1,14 @@
+{
+  "name": "vite02",
+  "version": "1.0.0",
+  "description": " Vite React & Express app ",
+  "scripts": {
+    "client": "npm run start --prefix client",
+    "server": "npm run start --prefix server",
+    "watch": "npm run server & npm run client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Kevin Inzelrac",
+  "license": "ISC"
+}
