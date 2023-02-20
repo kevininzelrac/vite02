@@ -9,7 +9,7 @@ require("dotenv").config();
 const cors = require("cors");
 app.use(cors({ credentials: true, origin: "*" }));
 
-/* const { Server } = require("socket.io");
+const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -22,7 +22,7 @@ io.on("connection", (socket) => {
   socket.on("favorite", (data) => {
     io.emit("favorite", data);
   });
-}); */
+});
 
 const user = require("./routes/user");
 app.use("/", user);
