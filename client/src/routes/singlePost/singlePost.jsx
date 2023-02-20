@@ -36,7 +36,7 @@ export async function singlePostLoader({ params }) {
 export async function singlePostAction({ request }) {
   const formData = await request.formData();
   const update = Object.fromEntries(formData);
-  const response = await fetch("/api/addcomment", {
+  const response = await fetch("/api/addComment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
