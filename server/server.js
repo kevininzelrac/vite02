@@ -6,8 +6,8 @@ const http = require("http");
 const server = http.createServer(app);
 require("dotenv").config();
 
-//const cors = require("cors");
-//app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
+const cors = require("cors");
+app.use(cors({ credentials: true, origin: "*" }));
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
