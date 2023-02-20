@@ -9,7 +9,7 @@ const { privateRoute } = require("../middlewares/privateRoute");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-router.post("/api/addcomment", privateRoute, async (req, res) => {
+router.post("/api/addComment", privateRoute, async (req, res) => {
   try {
     await new CommentsModel({
       author: req.user.name,
