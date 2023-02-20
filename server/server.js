@@ -18,6 +18,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  socket.on("disconnect", () => console.log("Socket Client disconnected"));
   socket.on("favorite", (data) => {
     io.emit("favorite", data);
   });
