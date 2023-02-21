@@ -12,13 +12,13 @@ const UsersModel = require("../models/users");
 router.post("/api/login", auth, async (req, res) => {
   try {
     const accessToken = sign(
-      { name: req.user.name },
+      { name: await req.user.name },
       process.env.ACCESS_TOKEN,
       { expiresIn: "1m" }
     );
 
     const refreshToken = sign(
-      { name: req.user.name },
+      { name: await req.user.name },
       process.env.REFRESH_TOKEN
     );
 
@@ -33,13 +33,13 @@ router.post("/api/login", auth, async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    res.status(200).json({
+    res.send({
       accessToken: accessToken,
       name: await req.user.name,
       user: user,
     });
-  } catch (err) {
-    throw new Error(err);
+  } catch (error) {
+    res.send({ error: error });
   }
 });
 
