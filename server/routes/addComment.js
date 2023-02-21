@@ -12,15 +12,14 @@ router.use(cookieParser());
 router.post("/api/addComment", privateRoute, async (req, res) => {
   try {
     await new CommentsModel({
-      author: req.user.name,
-      user: req.user._id,
-      parent_id: req.body._id,
+      author: await req.user._id,
+      parent_id: await req.body._id,
       date: new Date(),
-      content: req.body.content,
+      content: await req.body.content,
     }).save();
-    res.json(new Date());
-  } catch (err) {
-    res.status(400).json({ error: err });
+    res.send(new Date());
+  } catch (error) {
+    res.send({ error: error });
   }
 });
 
