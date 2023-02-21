@@ -12,15 +12,15 @@ router.use(cookieParser());
 router.post("/api/updatepage", privateRoute, async (req, res) => {
   try {
     const post = await PostsModel.findOne({
-      author: req.user.name,
-      label: req.body.label,
+      author: await req.user.name,
+      label: await req.body.label,
     });
     post.about = await req.body.about;
     post.updated = new Date();
     await post.save();
-    res.json(new Date());
-  } catch (err) {
-    res.status(400).json({ error: err });
+    res.send(new Date());
+  } catch (error) {
+    res.send({ error: error });
   }
 });
 
