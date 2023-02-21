@@ -26,17 +26,18 @@ router.post("/api/login", auth, async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
     });
-    /* await UsersModel.updateOne(
-      { name: req.user.name },
-      { $set: { refreshToken: refreshToken } }
-    ); */
-    const user = await UsersModel.findOne({ name: req.user.name });
+    const user = await UsersModel.findOne(
+      { name: await req.user.name },
+      { password: 0, __v: 0 }
+    );
     user.refreshToken = refreshToken;
-    user.save();
+    await user.save();
 
-    res
-      .status(200)
-      .json({ accessToken: accessToken, name: req.user.name, user: user });
+    res.status(200).json({
+      accessToken: accessToken,
+      name: await req.user.name,
+      user: user,
+    });
   } catch (err) {
     throw new Error(err);
   }
