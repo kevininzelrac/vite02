@@ -16,7 +16,7 @@ router.get("/api/singlePost/:post", async (req, res) => {
       label: req.params.post,
     });
 
-    res.json(post);
+    res.send(post);
   } catch (error) {
     res.json(error);
   }
