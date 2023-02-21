@@ -46,7 +46,7 @@ const privateRoute = async (req, res, next) => {
         throw new Error("RefreshToken unvalid");
       }
     } catch (error) {
-      res.json({
+      res.send({
         error: "Not Allowed, please Log in or Register",
       });
     }
