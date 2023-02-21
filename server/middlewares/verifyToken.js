@@ -31,7 +31,7 @@ const verifyToken = async (req, res, next) => {
         req.user = user;
         return next();
       } catch (error) {
-        res.json({
+        res.send({
           error: "Not Allowed, please Log in or Register",
         });
       }
