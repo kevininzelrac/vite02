@@ -12,14 +12,14 @@ router.use(cookieParser());
 router.post("/api/unlikeComment", privateRoute, async (req, res) => {
   try {
     const comment = await CommentsModel.findOne({
-      _id: req.body._id,
+      _id: await req.body._id,
     });
-    const index = comment.likes.indexOf(req.body.user_id);
+    const index = comment.likes.indexOf(await req.body.user_id);
     comment.likes.splice(index, 1);
     await comment.save();
-    res.json(new Date());
-  } catch (err) {
-    res.status(400).json({ error: err });
+    res.send(new Date());
+  } catch (error) {
+    res.send({ error: error });
   }
 });
 
