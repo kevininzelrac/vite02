@@ -33,7 +33,7 @@ router.get("/api/comments/:post", privateRoute, async (req, res) => {
           likes,
           comment: nestComments(_id, xs),
         }));
-    res.json(await nestComments(post._id, comments));
+    res.send(await nestComments(post._id, comments));
     //res.json({ post_id: post.id, comments: nestComments(post._id, comments) });
   } catch (err) {
     res.json(err);
