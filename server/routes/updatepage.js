@@ -4,19 +4,20 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.HOST);
 mongoose.set("strictQuery", false);
 const PostsModel = require("../models/posts");
-const { verifyToken } = require("../middlewares/verifyToken");
+//const { verifyToken } = require("../middlewares/verifyToken");
+const { privateRoute } = require("../middlewares/privateRoute");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-router.post("/api/updatepage", verifyToken, async (req, res) => {
+router.post("/api/updatepage", privateRoute, async (req, res) => {
   try {
     const post = await PostsModel.findOne({
       author: req.user.name,
       label: req.body.label,
     });
-    post.about = req.body.about;
+    post.about = await req.body.about;
     post.updated = new Date();
-    post.save();
+    await post.save();
     res.json(new Date());
   } catch (err) {
     res.status(400).json({ error: err });
