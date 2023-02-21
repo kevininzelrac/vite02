@@ -9,7 +9,6 @@ const { publicRoute } = require("../middlewares/publicRoute");
 
 router.get("/api/nav", publicRoute, async (req, res) => {
   try {
-    //const nav = await PostsModel.find({ type: "page" });
     const nav = await PostsModel.find({
       $or: [
         {
@@ -33,9 +32,9 @@ router.get("/api/nav", publicRoute, async (req, res) => {
           children: ImRecursive(label, target),
         }));
 
-    res.json({ user: await req.user, nav: await ImRecursive("", nav) });
+    res.send({ user: await req.user, nav: await ImRecursive("", nav) });
   } catch (error) {
-    res.json(error);
+    res.send({ error: error });
   }
 });
 
