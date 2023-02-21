@@ -13,7 +13,7 @@ router.get("/api/pages/:page", async (req, res) => {
   try {
     const page = await PostsModel.findOne({ label: req.params.page });
 
-    res.json(page);
+    res.send(page);
   } catch (error) {
     res.json(error);
   }
