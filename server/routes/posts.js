@@ -13,7 +13,7 @@ router.get("/api/posts", async (req, res) => {
   try {
     const posts = await PostsModel.find({ type: "post" }).sort({ date: -1 });
 
-    res.json(posts);
+    res.send(posts);
   } catch (error) {
     res.json(error);
   }
