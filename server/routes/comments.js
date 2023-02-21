@@ -17,7 +17,6 @@ router.get("/api/comments/:post", privateRoute, async (req, res) => {
     });
     const comments = await CommentsModel.find().sort({ date: 1 }).populate({
       path: "author",
-      //select: "-password -email -refreshToken -__v",
       select: "_id avatar name",
     });
 
@@ -35,8 +34,8 @@ router.get("/api/comments/:post", privateRoute, async (req, res) => {
         }));
     res.send(await nestComments(post._id, comments));
     //res.json({ post_id: post.id, comments: nestComments(post._id, comments) });
-  } catch (err) {
-    res.json(err);
+  } catch (error) {
+    res.send({ error: error });
   }
 });
 
