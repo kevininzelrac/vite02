@@ -45,7 +45,9 @@ const publicRoute = async (req, res, next) => {
     } catch (error) {
       req.accessToken = "";
       req.user = "";
-      console.log("poblicRoute : no user");
+
+      console.log("publicRoute : no user");
+
       return next();
       /* res.json({
         error: "Not Allowed, please Log in or Register",
