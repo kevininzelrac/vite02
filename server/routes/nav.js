@@ -33,7 +33,7 @@ router.get("/api/nav", publicRoute, async (req, res) => {
           children: ImRecursive(label, target),
         }));
 
-    res.json({ user: req.user, nav: await ImRecursive("", nav) });
+    res.json({ user: await req.user, nav: await ImRecursive("", nav) });
   } catch (error) {
     res.json(error);
   }
