@@ -15,9 +15,9 @@ router.get("/api/user/:name", async (req, res) => {
       { password: 0, __v: 0 }
     );
 
-    res.json(user);
+    res.send(user);
   } catch (error) {
-    res.json(error);
+    res.send({ error: error });
   }
 });
 
