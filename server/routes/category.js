@@ -16,9 +16,9 @@ router.get("/api/category/:category", async (req, res) => {
       category: req.params.category,
     }).sort({ date: -1 });
 
-    res.json(category);
+    res.send(category);
   } catch (error) {
-    res.json(error);
+    res.send({ error: error });
   }
 });
 
