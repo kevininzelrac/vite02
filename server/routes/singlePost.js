@@ -18,7 +18,7 @@ router.get("/api/singlePost/:post", async (req, res) => {
 
     res.send(post);
   } catch (error) {
-    res.json(error);
+    res.send({ error: error });
   }
 });
 
