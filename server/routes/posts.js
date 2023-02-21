@@ -15,7 +15,7 @@ router.get("/api/posts", async (req, res) => {
 
     res.send(posts);
   } catch (error) {
-    res.json(error);
+    res.send({ error: error });
   }
 });
 
