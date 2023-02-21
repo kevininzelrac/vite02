@@ -18,9 +18,9 @@ function withVoids(editor) {
 }
 
 export default function TextEditor({ data, user }) {
-  data?.about?.includes("<" || ">")
+  /*  data?.about?.includes("<" || ">")
     ? (data.about = data.about)
-    : (data.about = "<p>" + data.about + "</p>");
+    : (data.about = "<p>" + data.about + "</p>"); */
 
   const document = new DOMParser().parseFromString(data.about, "text/html");
 
