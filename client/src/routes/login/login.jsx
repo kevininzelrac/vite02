@@ -24,6 +24,7 @@ export async function loginAction({ request }) {
     case "DELETE": {
       const response = await fetch("/api/logout");
       const data = await response.json();
+      console.log(data);
       return data;
     }
 
