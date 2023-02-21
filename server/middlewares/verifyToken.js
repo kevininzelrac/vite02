@@ -7,7 +7,6 @@ const { sign, verify } = require("jsonwebtoken");
 const verifyToken = async (req, res, next) => {
   try {
     const authHeader = await req.headers["authorization"];
-    //const accessToken = (await authHeader) && authHeader.split(" ")[1];
     const accessToken = await authHeader?.split(" ")[1];
     const verifiedAccess = verify(accessToken, process.env.ACCESS_TOKEN);
     if (verifiedAccess) {
@@ -16,15 +15,8 @@ const verifyToken = async (req, res, next) => {
       return next();
     }
   } catch (err) {
-    //console.log(err);
     const refreshToken = await req.cookies["refreshToken"];
     verify(refreshToken, process.env.REFRESH_TOKEN, async (err, user) => {
-      /* if (err) {
-        return res.json({
-          error: "Not Allowed, please Log in or Register",
-        });
-      } */
-
       try {
         const mongo = await UsersModel.findOne({
           name: user.name,
@@ -39,9 +31,8 @@ const verifyToken = async (req, res, next) => {
         req.user = user;
         return next();
       } catch (error) {
-        //console.log(error);
         res.json({
-          error: "Not Allowed, please Log in or Register" /*err.message*/,
+          error: "Not Allowed, please Log in or Register",
         });
       }
     });
