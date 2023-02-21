@@ -4,11 +4,12 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.HOST);
 mongoose.set("strictQuery", false);
 const CommentsModel = require("../models/comments");
-const { verifyToken } = require("../middlewares/verifyToken");
+//const { verifyToken } = require("../middlewares/verifyToken");
+const { privateRoute } = require("../middlewares/privateRoute");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-router.post("/api/unlikeComment", verifyToken, async (req, res) => {
+router.post("/api/unlikeComment", privateRoute, async (req, res) => {
   try {
     const comment = await CommentsModel.findOne({
       _id: req.body._id,
