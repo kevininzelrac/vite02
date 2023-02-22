@@ -13,9 +13,9 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import io from "socket.io-client";
 
-/* const socket = io.connect(
+const socket = io.connect(
   new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
-); */
+);
 
 export default function Comments() {
   const { comments, post } = useLoaderData();
@@ -46,7 +46,7 @@ export default function Comments() {
 const Recursive = ({ data }) => {
   const { user } = useRouteLoaderData("navbar");
   const fetcher = useFetcher();
-  /* const [favorite, setFavorite] = useState({});
+  const [favorite, setFavorite] = useState({});
 
   const handleClick = (id) => {
     favorite.id?.includes(id)
@@ -59,7 +59,7 @@ const Recursive = ({ data }) => {
     socket.on("favorite", (data) => {
       setFavorite(data);
     });
-  }, [socket]); */
+  }, [socket]);
   return (
     <>
       {data.map(({ _id, content, author, date, comment, likes }) => (
@@ -93,14 +93,14 @@ const Recursive = ({ data }) => {
                   </fetcher.Form>
                 </>
               )}
-              {/*  <button onClick={() => handleClick(_id)}>
+              <button onClick={() => handleClick(_id)}>
                 <FavoriteIcon
                   sx={{
                     color: favorite.id?.includes(_id) ? "red" : "grey",
                     fontSize: "small",
                   }}
                 />
-              </button> */}
+              </button>
             </div>
             {likes.length > 0 && (
               <div className="likes">
