@@ -7,7 +7,12 @@ const server = http.createServer(app);
 require("dotenv").config();
 
 const cors = require("cors");
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:5000", "https://vite02.onrender.com"],
+  })
+);
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
