@@ -42,7 +42,7 @@ const nav = require("./routes/nav");
 app.use("/", nav);
 
 const pages = require("./routes/pages");
-app.use("/", pages);
+app.use("/api/pages", pages);
 
 const updatepage = require("./routes/updatepage");
 app.use("/", updatepage);
