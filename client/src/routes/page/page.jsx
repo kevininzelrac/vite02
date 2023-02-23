@@ -9,6 +9,7 @@ import {
   useRouteLoaderData,
 } from "react-router-dom";
 import { AwaitError } from "../../components/errors/errors";
+import Loading from "../../components/loading/loading";
 import TextEditor from "../../components/slate/editor";
 import "./page.css";
 
@@ -33,7 +34,7 @@ export default function Page() {
 
   return (
     <>
-      <Suspense fallback={<p>Loading page...</p>}>
+      <Suspense fallback={<Loading />}>
         <Await resolve={page} errorElement={<AwaitError />}>
           {(page) => (
             <main
