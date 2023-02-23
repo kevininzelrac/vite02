@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 router.use(cookieParser()); */
 
 /* router.get("/api/pages/:page", publicRoute, async (req, res) => { */
-router.get("/api/pages/:page", async (req, res) => {
+router.get("/:page", async (req, res) => {
   try {
     const page = await PostsModel.findOne({ label: req.params.page });
     res.send(page);
