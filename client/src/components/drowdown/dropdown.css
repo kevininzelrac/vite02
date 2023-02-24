@@ -78,3 +78,9 @@ nav .dropdown:hover > .item {
   transform: translateY(0px);
   transform: translateX(0px);
 }
+
+nav .dropdown .user img {
+  width: 20px;
+  padding-right: 5px;
+  border-radius: 50%;
+}
