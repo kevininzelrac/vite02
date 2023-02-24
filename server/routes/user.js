@@ -4,18 +4,13 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.HOST);
 mongoose.set("strictQuery", false);
 const UsersModel = require("../models/users");
-/* const { publicRoute } = require("../middlewares/publicRoute");
-const cookieParser = require("cookie-parser");
+const { privateRoute } = require("../middlewares/privateRoute");
+/* const cookieParser = require("cookie-parser");
 router.use(cookieParser()); */
 
-router.get("/api/user/:name", async (req, res) => {
+router.get("/api/user/", privateRoute, async (req, res) => {
   try {
-    const user = await UsersModel.findOne(
-      { name: req.params.name },
-      { password: 0, __v: 0 }
-    );
-
-    res.send(user);
+    res.send({ user: await req.user });
   } catch (error) {
     res.send({ error: error });
   }
