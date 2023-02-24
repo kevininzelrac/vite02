@@ -1,11 +1,25 @@
-import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
+import {
+  Await,
+  defer,
+  Link,
+  Outlet,
+  useFetcher,
+  useLoaderData,
+} from "react-router-dom";
 import Button from "../button/button";
 import Dropdown from "../drowdown/dropdown";
+import { AwaitError } from "../errors/errors";
+import Loading from "../loading/loading";
 import "./navbar.css";
 
 export async function navbarLoader() {
-  const nav = await fetch("/api/nav");
-  return nav;
+  const nav = fetch("/api/nav/").then((res) => res.json());
+  const user = fetch("/api/user/")
+    .then((res) => res.json())
+    .then(({ user }) => user);
+
+  return defer({ nav: nav, user: await user });
 }
 
 const Navbar = () => {
@@ -13,32 +27,42 @@ const Navbar = () => {
   const fetcher = useFetcher();
 
   return (
-    <>
-      <nav>
-        <Recursive nav={nav} />
-        {user ? (
+    <Suspense fallback={<Loading>Loadind Site ...</Loading>}>
+      <Await resolve={nav} errorElement={<AwaitError />}>
+        {(nav) => (
           <>
-            <Dropdown label={user.name}>
-              <Link to="Parametres" relative="path">
-                Parametres
-              </Link>
-              <Link to="Dashboard" relative="path">
-                Dashboard
-              </Link>
-              <fetcher.Form method="delete" action="Login" relative="path">
-                <button type="submit">Log Out</button>
-              </fetcher.Form>
-            </Dropdown>
-            <Link to="#">+</Link>
+            <nav>
+              <Recursive nav={nav} />
+              {user ? (
+                <>
+                  <Dropdown label={user}>
+                    <Link to="Parametres" relative="path">
+                      Parametres
+                    </Link>
+                    <Link to="Dashboard" relative="path">
+                      Dashboard
+                    </Link>
+                    <fetcher.Form
+                      method="delete"
+                      action="Login"
+                      relative="path"
+                    >
+                      <button type="submit">Log Out</button>
+                    </fetcher.Form>
+                  </Dropdown>
+                  <Link to="#">+</Link>
+                </>
+              ) : (
+                <Link to="Login" relative="path">
+                  Log In
+                </Link>
+              )}
+            </nav>
+            <Outlet />
           </>
-        ) : (
-          <Link to="Login" relative="path">
-            Log In
-          </Link>
         )}
-      </nav>
-      <Outlet />
-    </>
+      </Await>
+    </Suspense>
   );
 };
 export default Navbar;
@@ -47,7 +71,7 @@ const Recursive = ({ nav, parent = "" }) => {
   const { user } = useLoaderData();
   return (
     <>
-      {nav.map(({ label, type, children }) =>
+      {nav?.map(({ label, type, children }) =>
         children.length ? (
           <Dropdown key={label} label={label} type={type} parent={parent}>
             <Recursive nav={children} parent={parent + label + "/"} />
