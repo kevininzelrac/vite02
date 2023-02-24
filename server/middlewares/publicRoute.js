@@ -22,8 +22,8 @@ const publicRoute = async (req, res, next) => {
       const refreshToken = await req.cookies["refreshToken"];
       const verifiedRefresh = verify(refreshToken, process.env.REFRESH_TOKEN);
 
-      console.log("publicRoute verifiedRefreshToken :");
-      console.log(verifiedRefresh);
+      //console.log("publicRoute verifiedRefreshToken :");
+      //console.log(verifiedRefresh);
 
       if (verifiedRefresh) {
         const mongo = await UsersModel.findOne(
@@ -31,7 +31,7 @@ const publicRoute = async (req, res, next) => {
             name: await verifiedRefresh.name,
             refreshToken: refreshToken,
           },
-          { password: 0 }
+          { refreshToken: 0, password: 0, __v: 0 }
         );
         const newAccessToken = sign(
           { name: mongo.name },
@@ -46,7 +46,7 @@ const publicRoute = async (req, res, next) => {
       req.accessToken = "";
       req.user = "";
 
-      console.log("publicRoute : no user");
+      //console.log("publicRoute : no user");
 
       return next();
       /* res.json({
