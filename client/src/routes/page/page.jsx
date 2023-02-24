@@ -3,7 +3,6 @@ import {
   Await,
   defer,
   Outlet,
-  useAsyncValue,
   useLoaderData,
   useNavigation,
   useRouteLoaderData,
