@@ -8,6 +8,7 @@ import {
   useNavigation,
 } from "react-router-dom";
 import { AwaitError } from "../../components/errors/errors";
+import Loading from "../../components/loading/loading";
 import "./category.css";
 
 export async function categoryLoader({ params }) {
@@ -26,7 +27,7 @@ export default function Category() {
 
   return (
     <>
-      <Suspense fallback={<p>Loading posts...</p>}>
+      <Suspense fallback={<Loading>Loading Categories ...</Loading>}>
         <Await resolve={posts} errorElement={<AwaitError />}>
           {(posts) => (
             <main
