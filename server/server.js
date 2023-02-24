@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 const http = require("http");
 const server = http.createServer(app);
 require("dotenv").config();
@@ -23,7 +26,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("disconnect", () => console.log("Socket Client disconnected"));
+  //socket.on("disconnect", () => console.log("Socket Client disconnected"));
   socket.on("favorite", (data) => {
     io.emit("favorite", data);
   });
@@ -69,5 +72,5 @@ const unlikeComment = require("./routes/unlikeComment");
 app.use("/", unlikeComment);
 
 server.listen(5001, () => {
-  console.log(`Server listening on 5001`);
+  //console.log(`Server listening on 5001`);
 });
