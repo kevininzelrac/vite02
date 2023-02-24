@@ -6,9 +6,8 @@ mongoose.set("strictQuery", false);
 const CommentsModel = require("../models/comments");
 //const { verifyToken } = require("../middlewares/verifyToken");
 const { privateRoute } = require("../middlewares/privateRoute");
-const cookieParser = require("cookie-parser");
-
-router.use(cookieParser());
+/* const cookieParser = require("cookie-parser");
+router.use(cookieParser()); */
 
 router.post("/api/likeComment", privateRoute, async (req, res) => {
   try {
