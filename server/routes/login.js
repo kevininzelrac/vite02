@@ -2,14 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { auth } = require("./../middlewares/auth");
 const { sign } = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
-const mongoose = require("mongoose");
-mongoose.connect(process.env.HOST);
-mongoose.set("strictQuery", false);
 const UsersModel = require("../models/users");
 
-router.post("/api/login", auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const accessToken = sign(
       { name: await req.user.name },
