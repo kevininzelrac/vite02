@@ -2,12 +2,17 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+require("dotenv").config();
+
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 const http = require("http");
 const server = http.createServer(app);
-require("dotenv").config();
+
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
+mongoose.connect(process.env.HOST);
 
 const cors = require("cors");
 app.use(
@@ -33,43 +38,43 @@ io.on("connection", (socket) => {
 });
 
 const user = require("./routes/user");
-app.use("/", user);
+app.use("/api/user", user);
 
 const login = require("./routes/login");
-app.use("/", login);
+app.use("/api/login", login);
 
 const logout = require("./routes/logout");
-app.use("/", logout);
+app.use("/api/logout", logout);
 
 const nav = require("./routes/nav");
-app.use("/", nav);
+app.use("/api/nav", nav);
 
 const pages = require("./routes/pages");
 app.use("/api/pages", pages);
 
-const updatepage = require("./routes/updatepage");
-app.use("/", updatepage);
+const updatePage = require("./routes/updatepage");
+app.use("/api/updatePage", updatePage);
 
 const posts = require("./routes/posts");
-app.use("/", posts);
+app.use("/api/posts", posts);
 
 const category = require("./routes/category");
-app.use("/", category);
+app.use("/api/category", category);
 
 const singlePost = require("./routes/singlePost");
-app.use("/", singlePost);
+app.use("/api/singlePost", singlePost);
 
 const comments = require("./routes/comments");
-app.use("/", comments);
+app.use("/api/comments", comments);
 
 const addComment = require("./routes/addComment");
-app.use("/", addComment);
+app.use("/api/addComment", addComment);
 
 const likeComment = require("./routes/likeComment");
-app.use("/", likeComment);
+app.use("/api/likeComment", likeComment);
 
 const unlikeComment = require("./routes/unlikeComment");
-app.use("/", unlikeComment);
+app.use("/api/unlikeComment", unlikeComment);
 
 server.listen(5001, () => {
   console.log(`Server listening on 5001`);
