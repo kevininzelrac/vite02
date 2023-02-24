@@ -7,14 +7,14 @@ const { sign, verify } = require("jsonwebtoken");
 const privateRoute = async (req, res, next) => {
   try {
     const authHeader = await req.headers["authorization"];
-    console.log("privateRoute authHeader : " + authHeader);
+    //console.log("privateRoute authHeader : " + authHeader);
     const accessToken = await authHeader?.split(" ")[1];
     const verifiedAccess = verify(accessToken, process.env.ACCESS_TOKEN);
     if (verifiedAccess) {
       req.accessToken = await accessToken;
       req.user = verifiedAccess;
 
-      console.log("privateRoute verifiedAccessToken :" + verifiedAccess);
+      //console.log("privateRoute verifiedAccessToken :" + verifiedAccess);
 
       return next();
     }
@@ -23,8 +23,8 @@ const privateRoute = async (req, res, next) => {
       const refreshToken = await req.cookies["refreshToken"];
       const verifiedRefresh = verify(refreshToken, process.env.REFRESH_TOKEN);
 
-      console.log("privateRoute verifiedRefreshToken :");
-      console.log(verifiedRefresh);
+      //console.log("privateRoute verifiedRefreshToken :");
+      //console.log(verifiedRefresh);
 
       if (verifiedRefresh) {
         const mongo = await UsersModel.findOne(
@@ -32,7 +32,7 @@ const privateRoute = async (req, res, next) => {
             name: await verifiedRefresh.name,
             refreshToken: refreshToken,
           },
-          { password: 0, __v: 0 }
+          { refreshToken: 0, password: 0, __v: 0 }
         );
         const newAccessToken = sign(
           { name: mongo.name },
