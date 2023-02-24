@@ -34,7 +34,7 @@ export default function Page() {
 
   return (
     <>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading>Loading page ...</Loading>}>
         <Await resolve={page} errorElement={<AwaitError />}>
           {(page) => (
             <main
