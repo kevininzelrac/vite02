@@ -10,6 +10,7 @@ import {
 import Comments from "../../components/comments/comments";
 import { AwaitError } from "../../components/errors/errors";
 import TextEditor from "../../components/slate/editor";
+import Loading from "../../components/loading/loading";
 import "./singlePost.css";
 
 export async function singlePostLoader({ params }) {
@@ -53,7 +54,7 @@ export default function SinglePost() {
 
   return (
     <>
-      <Suspense fallback={<p>Loading post...</p>}>
+      <Suspense fallback={<Loading>Loading Post ...</Loading>}>
         <Await resolve={post} errorElement={<AwaitError />}>
           {(post) => (
             <main
