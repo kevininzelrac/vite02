@@ -1,6 +1,3 @@
-const mongoose = require("mongoose");
-mongoose.connect(process.env.HOST);
-mongoose.set("strictQuery", false);
 const UsersModel = require("../models/users");
 const bcrypt = require("bcrypt");
 
