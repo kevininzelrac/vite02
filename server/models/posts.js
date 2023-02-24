@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
 
 const PostsSchema = new mongoose.Schema({
   type: {
