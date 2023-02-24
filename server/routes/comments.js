@@ -1,15 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-mongoose.connect(process.env.HOST);
-mongoose.set("strictQuery", false);
+
 const PostsModel = require("./../models/posts");
 const CommentsModel = require("./../models/comments");
 const { privateRoute } = require("../middlewares/privateRoute");
-/* const cookieParser = require("cookie-parser");
-router.use(cookieParser()); */
 
-router.get("/api/comments/:post", privateRoute, async (req, res) => {
+router.get("/:post", privateRoute, async (req, res) => {
   try {
     const post = await PostsModel.findOne({
       type: "post",
