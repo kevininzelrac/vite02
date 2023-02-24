@@ -5,9 +5,7 @@ mongoose.connect(process.env.HOST);
 mongoose.set("strictQuery", false);
 const PostsModel = require("../models/posts");
 
-const { publicRoute } = require("../middlewares/publicRoute");
-
-router.get("/api/nav", publicRoute, async (req, res) => {
+router.get("/api/nav", async (req, res) => {
   try {
     const nav = await PostsModel.find({
       $or: [
@@ -32,7 +30,7 @@ router.get("/api/nav", publicRoute, async (req, res) => {
           children: ImRecursive(label, target),
         }));
 
-    res.send({ user: await req.user, nav: await ImRecursive("", nav) });
+    res.send(await ImRecursive("", nav));
   } catch (error) {
     res.send({ error: error });
   }
