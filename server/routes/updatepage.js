@@ -6,8 +6,8 @@ mongoose.set("strictQuery", false);
 const PostsModel = require("../models/posts");
 //const { verifyToken } = require("../middlewares/verifyToken");
 const { privateRoute } = require("../middlewares/privateRoute");
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
+/* const cookieParser = require("cookie-parser");
+router.use(cookieParser()); */
 
 router.post("/api/updatepage", privateRoute, async (req, res) => {
   try {
