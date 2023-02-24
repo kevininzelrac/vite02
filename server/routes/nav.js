@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-mongoose.connect(process.env.HOST);
-mongoose.set("strictQuery", false);
 const PostsModel = require("../models/posts");
 
-router.get("/api/nav", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const nav = await PostsModel.find({
       $or: [
