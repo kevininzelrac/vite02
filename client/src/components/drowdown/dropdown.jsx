@@ -12,12 +12,23 @@ const Menu = ({ children }) => {
   );
 };
 
+const User = ({ children }) => {
+  return (
+    <div className="menu user">
+      <img src={children.avatar} />
+      {children.name}
+    </div>
+  );
+};
+
 const Dropdown = ({ label, type, parent, children }) => {
   return (
     <div className="dropdown">
       {children?.length ? (
         ["post", "category"].includes(type) || label === "Blog" ? (
           <Button parent={parent}>{label}</Button>
+        ) : label.name ? (
+          <User>{label}</User>
         ) : (
           <Menu>{label}</Menu>
         )
