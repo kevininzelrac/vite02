@@ -12,6 +12,7 @@ import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import io from "socket.io-client";
+import Loading from "../loading/loading";
 
 const socket = io.connect(
   new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
@@ -22,7 +23,7 @@ export default function Comments() {
   const navigation = useNavigation();
 
   return (
-    <Suspense fallback={<p>Loading comments...</p>}>
+    <Suspense fallback={<Loading>Loading Comments ...</Loading>}>
       <Await resolve={comments} errorElement={<AwaitError />}>
         {(comments) => (
           <div
