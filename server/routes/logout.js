@@ -1,14 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
 const { verify } = require("jsonwebtoken");
-const mongoose = require("mongoose");
-mongoose.connect(process.env.HOST);
-mongoose.set("strictQuery", false);
 const UsersModel = require("../models/users");
 
-router.get("/api/logout", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const refreshToken = await req.cookies["refreshToken"];
     const user = verify(refreshToken, process.env.REFRESH_TOKEN);
