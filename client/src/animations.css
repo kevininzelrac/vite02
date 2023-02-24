@@ -65,3 +65,14 @@
     opacity: 0;
   }
 }
+
+/* //////////////////////////*/
+/*      SPIN LOADING        */
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
