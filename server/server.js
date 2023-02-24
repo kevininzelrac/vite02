@@ -72,5 +72,5 @@ const unlikeComment = require("./routes/unlikeComment");
 app.use("/", unlikeComment);
 
 server.listen(5001, () => {
-  //console.log(`Server listening on 5001`);
+  console.log(`Server listening on 5001`);
 });
