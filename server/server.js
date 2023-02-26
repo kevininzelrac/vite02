@@ -25,7 +25,7 @@ app.use(
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5000", "https://vite02.onrender.com"],
+    origin: "*",
   },
 });
 
