@@ -10,13 +10,13 @@ import DateFormat from "../../utils/DateFormat";
 import { AwaitError } from "../errors/errors";
 import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import Loading from "../loading/loading";
 
-const socket = io.connect(
+const socket = io();
+/* const socket = io.connect(
   new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
-);
+); */
 
 export default function Comments() {
   const { comments, post } = useLoaderData();
@@ -35,7 +35,7 @@ export default function Comments() {
             <h4>Commentaires</h4>
             <Recursive data={comments} />
             <Await resolve={post} errorElement={<AwaitError />}>
-              {({ _id }) => <Form _id={_id} />}
+              {({ _id }) => <Form _id={_id}>Ajouter un commentaire</Form>}
             </Await>
           </div>
         )}
@@ -45,22 +45,6 @@ export default function Comments() {
 }
 
 const Recursive = ({ data }) => {
-  const { user } = useRouteLoaderData("navbar");
-  const fetcher = useFetcher();
-  const [favorite, setFavorite] = useState({});
-
-  const handleClick = (id) => {
-    favorite.id?.includes(id)
-      ? socket.emit("favorite", { id: "" })
-      : socket.emit("favorite", { id });
-    console.log(favorite);
-  };
-
-  useEffect(() => {
-    socket.on("favorite", (data) => {
-      setFavorite(data);
-    });
-  }, [socket]);
   return (
     <>
       {data.map(({ _id, content, author, date, comment, likes }) => (
@@ -73,42 +57,10 @@ const Recursive = ({ data }) => {
                 <p>{content}</p>
               </span>
               <time>{DateFormat(date)}</time>
-
-              <Form _id={_id} />
-              {likes.includes(user._id) ? (
-                <fetcher.Form method="delete" action="Like">
-                  <input type="hidden" name="_id" value={_id} />
-                  <input type="hidden" name="user_id" value={user._id} />
-                  <button type="submit" style={{ color: "#336699" }}>
-                    J'aime
-                  </button>
-                </fetcher.Form>
-              ) : (
-                <>
-                  <fetcher.Form method="post" action="Like">
-                    <input type="hidden" name="_id" value={_id} />
-                    <input type="hidden" name="user_id" value={user._id} />
-                    <button type="submit" style={{ color: "grey" }}>
-                      J'aime
-                    </button>
-                  </fetcher.Form>
-                </>
-              )}
-              <button onClick={() => handleClick(_id)}>
-                <FavoriteIcon
-                  sx={{
-                    color: favorite.id?.includes(_id) ? "red" : "grey",
-                    fontSize: "small",
-                  }}
-                />
-              </button>
+              <Form _id={_id}>Répondre</Form>
+              <Like comment_id={_id} likes={likes} />
             </div>
-            {likes.length > 0 && (
-              <div className="likes">
-                <ThumbUpIcon />
-                <small>{likes.length}</small>
-              </div>
-            )}
+            <LikeIcon comment_id={_id} />
           </section>
           {comment && <Recursive data={comment} />}
         </div>
@@ -117,7 +69,7 @@ const Recursive = ({ data }) => {
   );
 };
 
-const Form = ({ _id }) => {
+const Form = ({ _id, children }) => {
   const fetcher = useFetcher();
   const [visible, setVisible] = useState(false);
   const isIdle = fetcher.state === "idle";
@@ -135,7 +87,7 @@ const Form = ({ _id }) => {
           setVisible(!visible);
         }}
       >
-        {visible ? "Annuler" : "Répondre"}
+        {visible ? "Annuler" : children}
       </button>
       {visible && (
         <>
@@ -156,3 +108,78 @@ const Form = ({ _id }) => {
     </>
   );
 };
+
+const LikeIcon = ({ comment_id }) => {
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    socket.emit("getLike", comment_id);
+    socket.on("likes", (data) => {
+      const filtered = data.find(({ _id }) => _id === comment_id);
+      setLikes(filtered?.likes);
+    });
+    return () => {
+      socket.off("likes");
+    };
+  }, []);
+  return (
+    <>
+      {likes?.length > 0 && (
+        <div className="likes">
+          <ThumbUpIcon />
+          <small>{likes.length}</small>
+        </div>
+      )}
+    </>
+  );
+};
+
+const Like = ({ comment_id }) => {
+  const { user } = useRouteLoaderData("navbar");
+  const [like, setLike] = useState(false);
+
+  const handleLike = (comment_id, user_id) => {
+    socket.emit("like", { comment_id, user_id });
+  };
+
+  useEffect(() => {
+    socket.emit("getLike", comment_id);
+    socket.on("likes", (data) => {
+      const filtered = data.find(
+        ({ _id, likes }) => likes.includes(user._id) && _id === comment_id
+      );
+      setLike(filtered);
+    });
+    return () => {
+      socket.off("likes");
+    };
+  }, []);
+
+  return (
+    <button
+      onClick={() => handleLike(comment_id, user._id)}
+      style={{
+        color: like ? "#336699" : "grey",
+      }}
+    >
+      J'aime
+    </button>
+  );
+};
+
+/* <fetcher.Form
+  method={likes.includes(user._id) ? "delete" : "post"}
+  action="Like"
+>
+  <input type="hidden" name="_id" value={_id} />
+  <input type="hidden" name="user_id" value={user._id} />
+  <button
+    type="submit"
+    style={{
+      color: likes.includes(user._id) ? "#336699" : "grey",
+      opacity: isSubmitting || isLoading ? 0.5 : 1,
+    }}
+  >
+    J'aime
+  </button>
+</fetcher.Form> */
