@@ -14,9 +14,11 @@ import { io } from "socket.io-client";
 import Loading from "../loading/loading";
 
 //const socket = io();
-const socket = io.connect(
+/* const socket = io.connect(
   new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
-);
+); */
+
+const socket = io.connect(location.origin);
 
 export default function Comments() {
   const { comments, post } = useLoaderData();
@@ -58,8 +60,9 @@ const Recursive = ({ data }) => {
               </span>
               <time>{DateFormat(date)}</time>
               <Form _id={_id}>Répondre</Form>
-              <Like comment_id={_id} likes={likes} />
+              <Like2 comment_id={_id} likes={likes} />
             </div>
+
             <LikeIcon comment_id={_id} />
           </section>
           {comment && <Recursive data={comment} />}
@@ -118,16 +121,38 @@ const LikeIcon = ({ comment_id }) => {
       const filtered = data.find(({ _id }) => _id === comment_id);
       setLikes(filtered?.likes);
     });
+
     return () => {
       socket.off("likes");
     };
-  }, []);
+  }, [socket]);
   return (
     <>
       {likes?.length > 0 && (
         <div className="likes">
           <ThumbUpIcon />
           <small>{likes.length}</small>
+        </div>
+      )}
+    </>
+  );
+};
+
+const LikeIcon2 = ({ comment_id }) => {
+  const { socket } = useLoaderData();
+  const [filtered, setFiltered] = useState([]);
+
+  socket?.on("likes", async (data) => {
+    const temp = await data.find(({ _id }) => _id === comment_id);
+    setFiltered(temp?.likes);
+  });
+
+  return (
+    <>
+      {filtered?.length > 0 && (
+        <div className="likes">
+          <ThumbUpIcon />
+          <small>{filtered.length}</small>
         </div>
       )}
     </>
@@ -164,6 +189,45 @@ const Like = ({ comment_id }) => {
     >
       J'aime
     </button>
+  );
+};
+
+const Like2 = ({ comment_id }) => {
+  const { user } = useRouteLoaderData("navbar");
+  const fetcher = useFetcher();
+  const isIdle = fetcher.state === "idle";
+  const isSubmitting = fetcher.state === "submitting";
+  const isLoading = fetcher.state === "loading";
+  const [like, setLike] = useState();
+
+  useEffect(() => {
+    socket.emit("getLike", comment_id);
+    socket.on("likes", (data) => {
+      const filtered = data.find(
+        ({ _id, likes }) => likes.includes(user._id) && _id === comment_id
+      );
+      setLike(filtered);
+    });
+    return () => {
+      socket.off("likes");
+    };
+  }, []);
+
+  return (
+    <fetcher.Form action="Like" method="post">
+      <input type="hidden" name="comment_id" value={comment_id} />
+      <input type="hidden" name="user_id" value={user._id} />
+      <button
+        type="submit"
+        style={{
+          //color: likes.includes(user._id) ? "#336699" : "grey",
+          color: like && isIdle ? "#336699" : "grey",
+          opacity: isSubmitting || isLoading ? 0.4 : 1,
+        }}
+      >
+        J'aime
+      </button>
+    </fetcher.Form>
   );
 };
 
