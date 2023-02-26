@@ -15,8 +15,9 @@ export default defineConfig({
         secure: false,
       },
       "/socket.io": {
-        target: "http://localhost:5001",
-        /* ws: true, */
+        target: "ws://localhost:5001",
+        changeOrigin: true,
+        ws: true,
       },
     },
   },
