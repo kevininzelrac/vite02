@@ -13,10 +13,10 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { io } from "socket.io-client";
 import Loading from "../loading/loading";
 
-const socket = io();
-/* const socket = io.connect(
+//const socket = io();
+const socket = io.connect(
   new WebSocket(location.origin.replace(/^http/, "ws") + "/socket.io")
-); */
+);
 
 export default function Comments() {
   const { comments, post } = useLoaderData();
