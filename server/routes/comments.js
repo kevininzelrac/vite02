@@ -14,7 +14,11 @@ router.get("/:post", privateRoute, async (req, res) => {
     const comments = await CommentsModel.find().sort({ date: 1 }).populate({
       path: "author",
       select: "_id avatar name",
-    });
+    }); /* 
+      .populate({
+        path: "likes",
+        select: "user_id",
+      }) */
 
     const nestComments = (root, xs) =>
       xs
