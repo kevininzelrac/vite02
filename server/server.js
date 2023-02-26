@@ -25,15 +25,32 @@ app.use(
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    //methods: ["GET", "POST"],
+    origin: ["http://localhost:5000", "https://vite02.onrender.com"],
   },
 });
 
-io.on("connection", (socket) => {
-  //socket.on("disconnect", () => console.log("Socket Client disconnected"));
-  socket.on("favorite", (data) => {
-    io.emit("favorite", data);
+const CommentsModel = require("./models/comments");
+
+io.on("connection", async (socket) => {
+  socket.on("getLike", async () => {
+    const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
+    io.emit("likes", likes);
+  });
+
+  socket.on("like", async ({ comment_id, user_id }) => {
+    const comment = await CommentsModel.findOne({
+      _id: await comment_id,
+    });
+    if (comment.likes.includes(user_id)) {
+      const index = comment.likes.indexOf(await user_id);
+      comment.likes.splice(index, 1);
+      await comment.save();
+    } else {
+      comment.likes.push(await user_id);
+      await comment.save();
+    }
+    const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
+    io.emit("likes", likes);
   });
 });
 
@@ -70,11 +87,11 @@ app.use("/api/comments", comments);
 const addComment = require("./routes/addComment");
 app.use("/api/addComment", addComment);
 
-const likeComment = require("./routes/likeComment");
+/* const likeComment = require("./routes/likeComment");
 app.use("/api/likeComment", likeComment);
 
 const unlikeComment = require("./routes/unlikeComment");
-app.use("/api/unlikeComment", unlikeComment);
+app.use("/api/unlikeComment", unlikeComment); */
 
 server.listen(5001, () => {
   console.log(`Server listening on 5001`);
