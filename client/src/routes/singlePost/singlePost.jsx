@@ -14,6 +14,8 @@ import Loading from "../../components/loading/loading";
 import "./singlePost.css";
 
 export async function singlePostLoader({ params }) {
+  console.log("singlePostLoader");
+
   await new Promise((res) => {
     setTimeout(res, 300);
   });
@@ -24,19 +26,23 @@ export async function singlePostLoader({ params }) {
       return error;
     }
   });
-  const comments = fetch("/api/comments/" + params.post).then((res) => {
+
+  const comments = await fetch("/api/comments/" + params.post).then((res) => {
     try {
       return res.json();
     } catch (error) {
       return error;
     }
   });
+
   return defer({ post, comments });
 }
 
 export async function singlePostAction({ request }) {
+  console.log("commentsAction");
+
   const formData = await request.formData();
-  const update = Object.fromEntries(formData);
+  const update = Object.fromEntries(await formData);
   const response = await fetch("/api/addComment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -57,19 +63,21 @@ export default function SinglePost() {
       <Suspense fallback={<Loading>Loading Post ...</Loading>}>
         <Await resolve={post} errorElement={<AwaitError />}>
           {(post) => (
-            <main
-              style={{
-                animationName:
-                  navigation.state === "idle" ? "slideDown" : "slideUp",
-              }}
-            >
-              <TextEditor key={post?.about} data={post} user={user} />
-              {user && <Comments />}
-            </main>
+            <>
+              <main
+                style={{
+                  animationName:
+                    navigation.state === "idle" ? "slideDown" : "slideUp",
+                }}
+              >
+                <TextEditor key={post?.about} data={post} user={user} />
+                {user && <Comments _id={post._id} />}
+              </main>
+              <Outlet />
+            </>
           )}
         </Await>
       </Suspense>
-      <Outlet />
     </>
   );
 }
