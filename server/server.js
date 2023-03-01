@@ -32,9 +32,10 @@ const io = new Server(server, {
 const CommentsModel = require("./models/comments");
 
 io.on("connection", async (socket) => {
-  socket.on("getLike", async () => {
+  socket.on("getLike", async (comment_id) => {
     const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
     io.emit("likes", likes);
+    //console.log("getLike");
   });
 
   socket.on("like", async ({ comment_id, user_id }) => {
@@ -49,8 +50,12 @@ io.on("connection", async (socket) => {
       comment.likes.push(await user_id);
       await comment.save();
     }
-    const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
-    io.emit("likes", likes);
+    const likes = await CommentsModel.find(
+      { _id: comment_id },
+      { _id: 1, likes: 1 }
+    );
+    io.emit("updateLikes", likes);
+    //console.log("like");
   });
 });
 
