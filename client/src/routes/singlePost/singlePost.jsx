@@ -19,6 +19,7 @@ export async function singlePostLoader({ params }) {
   await new Promise((res) => {
     setTimeout(res, 300);
   });
+
   const post = fetch("/api/singlePost/" + params.post).then((res) => {
     try {
       return res.json();
@@ -27,7 +28,7 @@ export async function singlePostLoader({ params }) {
     }
   });
 
-  const comments = await fetch("/api/comments/" + params.post).then((res) => {
+  const comments = fetch("/api/comments/" + params.post).then((res) => {
     try {
       return res.json();
     } catch (error) {
