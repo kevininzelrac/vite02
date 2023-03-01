@@ -10,6 +10,6 @@ export async function saveAction({ request }) {
     body: JSON.stringify(update),
   });
   const data = await response.json();
-  console.log(data);
-  return data;
+  console.log(await data);
+  return await data;
 }
