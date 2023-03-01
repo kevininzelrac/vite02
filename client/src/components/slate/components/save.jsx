@@ -16,6 +16,7 @@ export default function Save({ label, about }) {
           <Icon format="save" />
         </button>
       </fetcher.Form>
+      {fetcher.state}
       {fetcher && !isIdle && <p>sauvegarde en cours ...</p>}
     </>
   );
