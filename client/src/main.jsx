@@ -25,7 +25,6 @@ import "./variables.css";
 import "./animations.css";
 import Parametres from "./routes/parametres/parametres";
 import { saveAction } from "./routes/save/save";
-import { likeAction } from "./routes/like/like";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -66,6 +65,7 @@ const router = createBrowserRouter(
           <Route path="login" element={<Login />} action={loginAction} />
         </Route>
       </Route>
+
       <Route
         path="Blog/:category"
         id="category"
@@ -79,15 +79,14 @@ const router = createBrowserRouter(
           <Route path="login" element={<Login />} action={loginAction} />
         </Route>
       </Route>
+
       <Route
-        path="Blog/:category/:post"
-        id="post"
+        path="Blog/:category/:post/"
         element={<SinglePost />}
         loader={singlePostLoader}
         action={singlePostAction}
         errorElement={<RouteError />}
       >
-        <Route path="Like" action={likeAction} />
         <Route element={<Modal />}>
           <Route path="Parametres" element={<Parametres />} />
           <Route path="Dashboard" element={<Dashboard />} />
