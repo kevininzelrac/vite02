@@ -4,8 +4,58 @@
   justify-content: flex-start;
   align-items: flex-start;
   z-index: 1;
-  width: 600px;
-  height: 600px;
+  width: 280px;
+  height: 420px;
   background-color: ghostwhite;
-  padding: 10px;
+  padding: 0px;
+  border-radius: 6px;
+}
+
+.parametres form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-self: center;
+  height: 100%;
+}
+
+.parametres form fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+}
+
+.parametres form label {
+  font-weight: bold;
+  font-size: small;
+  margin-bottom: 4px;
+}
+
+.parametres form span {
+  font-weight: normal;
+  font-size: small;
+}
+
+.parametres form button {
+  width: fit-content;
+  margin: 4px 0;
+  padding: 6px;
+  color: ghostwhite;
+  background: var(--gradient01);
+  box-shadow: var(--shade02);
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.parametres form button:hover {
+  background: var(--anthracite);
+  cursor: pointer;
+}
+
+.parametres form input[type="password"] {
+  width: 8rem;
 }
