@@ -50,11 +50,8 @@ io.on("connection", async (socket) => {
       comment.likes.push(await user_id);
       await comment.save();
     }
-    const likes = await CommentsModel.find(
-      { _id: comment_id },
-      { _id: 1, likes: 1 }
-    );
-    io.emit("updateLikes", likes);
+    const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
+    io.emit("likes", likes);
     //console.log("like");
   });
 });
