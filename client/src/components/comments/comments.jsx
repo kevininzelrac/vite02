@@ -16,7 +16,7 @@ export default function Comments({ _id }) {
   useEffect(() => {
     (async () => {
       try {
-        socket.emit("getComments", { _id });
+        await socket.emit("getComments", { _id });
         await socket.on("comments", async (data) => {
           const recursive = (root, target) => {
             return target
@@ -31,7 +31,7 @@ export default function Comments({ _id }) {
                 comment: recursive(_id, target),
               }));
           };
-          setComments(recursive(_id, data));
+          setComments(await recursive(_id, data));
         });
       } catch (error) {
         console.log(error);
@@ -96,7 +96,7 @@ const Form = ({ _id, children }) => {
     try {
       e.preventDefault();
       setIsPending(true);
-      socket.emit("comment", {
+      await socket.emit("comment", {
         author: user._id,
         parent_id: _id,
         content: content,
