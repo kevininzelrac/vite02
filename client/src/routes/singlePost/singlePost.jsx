@@ -53,7 +53,7 @@ export default function SinglePost() {
                 }}
               >
                 <TextEditor key={post?.about} data={post} user={user} />
-                {user && <Comments _id={post._id} />}
+                {user && <Comments _id={post._id} key={post._id} />}
               </main>
               <Outlet />
             </>
