@@ -32,7 +32,13 @@ const io = new Server(server, {
 const CommentsModel = require("./models/comments");
 
 io.on("connection", async (socket) => {
-  socket.on("getLike", async (comment_id) => {
+  console.log("socket connected");
+
+  socket.on("disconnect", () => {
+    console.log("socket disconnected");
+  });
+
+  socket.on("getLike", async () => {
     const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
     io.emit("likes", likes);
     //console.log("getLike");
@@ -53,6 +59,32 @@ io.on("connection", async (socket) => {
     const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
     io.emit("likes", likes);
     //console.log("like");
+  });
+
+  socket.on("getComments", async () => {
+    const comments = await CommentsModel.find().sort({ date: 1 }).populate({
+      path: "author",
+      select: "_id avatar name",
+    });
+    io.emit("comments", comments);
+  });
+
+  socket.on("comment", async ({ author, parent_id, content }) => {
+    await new CommentsModel({
+      author: await author,
+      parent_id: await parent_id,
+      date: new Date(),
+      content: await content,
+    }).save();
+
+    const comments = await CommentsModel.find().sort({ date: 1 }).populate({
+      path: "author",
+      select: "_id avatar name",
+    });
+    io.emit("comments", comments);
+
+    //const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
+    //io.emit("likes", likes);
   });
 });
 
@@ -83,16 +115,16 @@ app.use("/api/category", category);
 const singlePost = require("./routes/singlePost");
 app.use("/api/singlePost", singlePost);
 
-const comments = require("./routes/comments");
-app.use("/api/comments", comments);
+/* const comments = require("./routes/comments");
+app.use("/api/comments", comments); */
 
-const addComment = require("./routes/addComment");
-app.use("/api/addComment", addComment);
+/* const addComment = require("./routes/addComment");
+app.use("/api/addComment", addComment); */
 
 /* const likeComment = require("./routes/likeComment");
-app.use("/api/likeComment", likeComment);
+app.use("/api/likeComment", likeComment); */
 
-const unlikeComment = require("./routes/unlikeComment");
+/* const unlikeComment = require("./routes/unlikeComment");
 app.use("/api/unlikeComment", unlikeComment); */
 
 server.listen(5001, () => {
