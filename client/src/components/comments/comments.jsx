@@ -7,10 +7,12 @@ import {
 import DateFormat from "../../utils/DateFormat";
 import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import Loading from "../loading/loading";
 
 export default function Comments({ _id }) {
   const { socket } = useOutletContext();
   const navigation = useNavigation();
+  const [isPending, setIsPending] = useState(true);
   const [comments, setComments] = useState();
 
   useEffect(() => {
@@ -35,6 +37,8 @@ export default function Comments({ _id }) {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsPending(false);
       }
     })();
     return () => {
@@ -43,18 +47,24 @@ export default function Comments({ _id }) {
   }, [_id]);
 
   return (
-    <div
-      className="comments"
-      style={{
-        animationName: navigation.state === "idle" ? "fadeIn" : "fadeOut",
-      }}
-    >
-      <h4>Commentaires</h4>
-      {comments && <Recursive comments={comments} />}
-      <Form _id={_id} key={comments}>
-        Ajouter un commentaire
-      </Form>
-    </div>
+    <>
+      {isPending ? (
+        <Loading>Loading comments</Loading>
+      ) : (
+        <div
+          className="comments"
+          style={{
+            animationName: isPending ? "fadeOut" : "fadeIn",
+          }}
+        >
+          <h4>Commentaires</h4>
+          {comments && <Recursive comments={comments} />}
+          <Form _id={_id} key={comments}>
+            Ajouter un commentaire
+          </Form>
+        </div>
+      )}
+    </>
   );
 }
 
