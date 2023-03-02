@@ -11,6 +11,13 @@
   animation-iteration-count: 1;
 }
 
+.comments form {
+  width: 100%;
+}
+.comments form input {
+  width: 100%;
+  font-size: 1rem;
+}
 .comments .comment {
 }
 
@@ -37,6 +44,14 @@
   border-radius: 50%;
   margin: 3px;
 }
+.comments .comment section .socket {
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  left: 32px;
+  font-size: 25px;
+  color: green;
+}
 .comments .comment section div {
   /*  */
 }
@@ -54,12 +69,16 @@
 }
 
 .comments .comment section div span p {
-  font-size: small;
+  font-size: 1rem;
   margin: 0;
   padding: 0;
 }
 .comments .comment section form {
   display: inline;
+}
+.comments .comment section form input[type="text"] {
+  width: 100%;
+  font-size: 1rem;
 }
 .comments .comment section .likes {
   position: absolute;

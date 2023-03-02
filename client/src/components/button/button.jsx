@@ -4,7 +4,7 @@ import "./button.css";
 const Button = ({ parent, children }) => {
   return (
     <NavLink
-      draggable
+      /* draggable */
       key={children}
       to={parent + children}
       className={({ isActive, isPending }) =>

@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
-import {
-  useNavigation,
-  useRouteLoaderData,
-  useOutletContext,
-} from "react-router-dom";
+import { useRouteLoaderData, useOutletContext } from "react-router-dom";
 import DateFormat from "../../utils/DateFormat";
 import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import Loading from "../loading/loading";
 
 export default function Comments({ _id }) {
   const { socket } = useOutletContext();
-  const navigation = useNavigation();
+  const [isPending, setIsPending] = useState(true);
   const [comments, setComments] = useState();
 
   useEffect(() => {
     (async () => {
       try {
+        setIsPending(false);
         await socket.emit("getComments", { _id });
         await socket.on("comments", async (data) => {
           const recursive = (root, target) => {
@@ -35,26 +33,33 @@ export default function Comments({ _id }) {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsPending(false);
       }
     })();
     return () => {
       socket.off("data");
     };
-  }, [_id]);
-
+  }, []);
   return (
-    <div
-      className="comments"
-      style={{
-        animationName: navigation.state === "idle" ? "fadeIn" : "fadeOut",
-      }}
-    >
-      <h4>Commentaires</h4>
-      {comments && <Recursive comments={comments} />}
-      <Form _id={_id} key={comments}>
-        Ajouter un commentaire
-      </Form>
-    </div>
+    <>
+      {isPending ? (
+        <Loading>Loading comments</Loading>
+      ) : (
+        <div
+          className="comments"
+          style={{
+            animationName: isPending ? "fadeOut" : "fadeIn",
+          }}
+        >
+          <h4>Commentaires</h4>
+          <Recursive comments={comments} />
+          <Form _id={_id} key={comments}>
+            Ajouter un commentaire
+          </Form>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -64,6 +69,7 @@ const Recursive = ({ comments }) => {
       {comments?.map(({ _id, content, author, date, comment, likes }) => (
         <div className="comment" key={_id}>
           <section>
+            {author.socket === "on" && <div className="socket">•</div>}
             <img src={author.avatar} />
             <div>
               <span>
@@ -112,13 +118,6 @@ const Form = ({ _id, children }) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          setVisible(!visible);
-        }}
-      >
-        {visible ? "Annuler" : children}
-      </button>
       {visible && (
         <form onSubmit={handleSubmit}>
           <input
@@ -129,10 +128,18 @@ const Form = ({ _id, children }) => {
             name="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            placeholder=" Hit Enter to Submit"
             autoFocus
           />
         </form>
       )}
+      <button
+        onClick={() => {
+          setVisible(!visible);
+        }}
+      >
+        {visible ? "Annuler" : children}
+      </button>
     </>
   );
 };
