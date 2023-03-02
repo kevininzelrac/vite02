@@ -1,47 +1,67 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Await,
-  useFetcher,
-  useLoaderData,
   useNavigation,
   useRouteLoaderData,
+  useOutletContext,
 } from "react-router-dom";
 import DateFormat from "../../utils/DateFormat";
-import { AwaitError } from "../errors/errors";
 import "./comments.css";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import Loading from "../loading/loading";
-import { io } from "socket.io-client";
-const socket = io.connect(location.origin);
 
 export default function Comments({ _id }) {
-  const { comments } = useLoaderData();
+  const { socket } = useOutletContext();
   const navigation = useNavigation();
+  const [comments, setComments] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        socket.emit("getComments", { _id });
+        await socket.on("comments", async (data) => {
+          const recursive = (root, target) => {
+            return target
+              ?.filter(({ parent_id }) => parent_id === root)
+              .map(({ _id, parent_id, author, date, content, likes }) => ({
+                _id,
+                parent_id,
+                author,
+                date,
+                content,
+                likes,
+                comment: recursive(_id, target),
+              }));
+          };
+          setComments(recursive(_id, data));
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+    return () => {
+      socket.off("data");
+    };
+  }, [_id]);
 
   return (
-    <Suspense fallback={<Loading>Loading Comments ...</Loading>}>
-      <Await resolve={comments} errorElement={<AwaitError />}>
-        {(comments) => (
-          <div
-            className="comments"
-            style={{
-              animationName: navigation.state === "idle" ? "fadeIn" : "fadeOut",
-            }}
-          >
-            <h4>Commentaires</h4>
-            <Recursive comments={comments} />
-            <Form _id={_id}>Ajouter un commentaire</Form>
-          </div>
-        )}
-      </Await>
-    </Suspense>
+    <div
+      className="comments"
+      style={{
+        animationName: navigation.state === "idle" ? "fadeIn" : "fadeOut",
+      }}
+    >
+      <h4>Commentaires</h4>
+      {comments && <Recursive comments={comments} />}
+      <Form _id={_id} key={comments}>
+        Ajouter un commentaire
+      </Form>
+    </div>
   );
 }
 
 const Recursive = ({ comments }) => {
   return (
     <>
-      {comments.map(({ _id, content, author, date, comment, likes }) => (
+      {comments?.map(({ _id, content, author, date, comment, likes }) => (
         <div className="comment" key={_id}>
           <section>
             <img src={author.avatar} />
@@ -51,10 +71,12 @@ const Recursive = ({ comments }) => {
                 <p>{content}</p>
               </span>
               <time>{DateFormat(date)}</time>
-              <Form _id={_id}>Répondre</Form>
+              <Form _id={_id} key={comments}>
+                Répondre
+              </Form>
               <Like comment_id={_id} likes={likes} />
             </div>
-            <LikeIcon comment_id={_id} likes={likes} />
+            <LikeIcon comment_id={_id} likes={likes} key={comments.likes} />
           </section>
           {comment && <Recursive comments={comment} />}
         </div>
@@ -64,15 +86,29 @@ const Recursive = ({ comments }) => {
 };
 
 const Form = ({ _id, children }) => {
-  const fetcher = useFetcher();
+  const { socket } = useOutletContext();
+  const { user } = useRouteLoaderData("navbar");
+  const [content, setContent] = useState("");
+  const [isPending, setIsPending] = useState(false);
   const [visible, setVisible] = useState(false);
-  const isIdle = fetcher.state === "idle";
-  const isSubmitting = fetcher.state === "submitting";
-  const isLoading = fetcher.state === "loading";
 
-  useEffect(() => {
-    isIdle & visible && setVisible(false);
-  }, [isIdle]);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setIsPending(true);
+      socket.emit("comment", {
+        author: user._id,
+        parent_id: _id,
+        content: content,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsPending(false);
+      setVisible(false);
+      setContent("");
+    }
+  };
 
   return (
     <>
@@ -84,26 +120,25 @@ const Form = ({ _id, children }) => {
         {visible ? "Annuler" : children}
       </button>
       {visible && (
-        <>
-          <small>{fetcher.state !== "idle" && fetcher.state}</small>
-          <fetcher.Form method="put">
-            <input type="hidden" name="_id" value={_id} />
-            <input
-              style={{
-                color: isSubmitting ? "red" : isLoading ? "green" : "inherit",
-              }}
-              type="text"
-              name="content"
-              autoFocus
-            />
-          </fetcher.Form>
-        </>
+        <form onSubmit={handleSubmit}>
+          <input
+            style={{
+              opacity: isPending ? 0.4 : 1,
+            }}
+            type="text"
+            name="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            autoFocus
+          />
+        </form>
       )}
     </>
   );
 };
 
 const LikeIcon = ({ comment_id }) => {
+  const { socket } = useOutletContext();
   const [like, setLike] = useState();
 
   useEffect(() => {
@@ -136,6 +171,7 @@ const LikeIcon = ({ comment_id }) => {
 };
 
 const Like = ({ comment_id }) => {
+  const { socket } = useOutletContext();
   const { user } = useRouteLoaderData("navbar");
   const [like, setLike] = useState();
   const [isPending, setIsPending] = useState(false);
