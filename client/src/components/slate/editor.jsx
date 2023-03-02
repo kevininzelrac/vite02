@@ -42,34 +42,32 @@ export default function TextEditor({ data, user }) {
   const [readOnly, setReadOnly] = useState(true);
 
   return (
-    <>
-      <Slate
-        editor={editor}
-        value={initialValue}
-        onChange={(value) => {
-          setAbout({ children: value });
-        }}
-      >
-        {user && (
-          <Toolbar
-            label={data?.label}
-            about={about}
-            readOnly={readOnly}
-            setReadOnly={setReadOnly}
-          />
-        )}
-
-        <Editable
-          className={readOnly ? "readOnly" : "editor"}
-          editor={editor}
+    <Slate
+      editor={editor}
+      value={initialValue}
+      onChange={(value) => {
+        setAbout({ children: value });
+      }}
+    >
+      {user && (
+        <Toolbar
+          label={data?.label}
+          about={about}
           readOnly={readOnly}
-          renderElement={RenderElement}
-          renderLeaf={RenderLeaf}
-          onKeyDown={(e) => {
-            Shortcuts(e, editor);
-          }}
+          setReadOnly={setReadOnly}
         />
-      </Slate>
-    </>
+      )}
+
+      <Editable
+        className={readOnly ? "readOnly" : "editor"}
+        editor={editor}
+        readOnly={readOnly}
+        renderElement={RenderElement}
+        renderLeaf={RenderLeaf}
+        onKeyDown={(e) => {
+          Shortcuts(e, editor);
+        }}
+      />
+    </Slate>
   );
 }
