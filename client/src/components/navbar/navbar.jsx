@@ -12,8 +12,17 @@ import Dropdown from "../drowdown/dropdown";
 import { AwaitError } from "../errors/errors";
 import Loading from "../loading/loading";
 import "./navbar.css";
+import { io } from "socket.io-client";
+//const socket = io.connect(location.origin);
+
+const socket = io(location.origin, {
+  path: "/socket.io",
+  transports: ["websocket"],
+  secure: true,
+});
 
 export async function navbarLoader() {
+  console.log("navbarLoader");
   const nav = fetch("/api/nav/").then((res) => res.json());
   const user = fetch("/api/user/")
     .then((res) => res.json())
@@ -58,7 +67,7 @@ const Navbar = () => {
                 </Link>
               )}
             </nav>
-            <Outlet />
+            <Outlet context={{ socket }} />
           </>
         )}
       </Await>
