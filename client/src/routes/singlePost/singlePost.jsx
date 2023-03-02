@@ -28,30 +28,11 @@ export async function singlePostLoader({ params }) {
     }
   });
 
-  const comments = fetch("/api/comments/" + params.post).then((res) => {
-    try {
-      return res.json();
-    } catch (error) {
-      return error;
-    }
-  });
-
-  return defer({ post, comments });
+  return defer({ post });
 }
 
 export async function singlePostAction({ request }) {
-  console.log("commentsAction");
-
-  const formData = await request.formData();
-  const update = Object.fromEntries(await formData);
-  const response = await fetch("/api/addComment", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(update),
-  });
-  const data = await response.json();
-  return data;
+  //empty space
 }
 
 export default function SinglePost() {
