@@ -13,6 +13,7 @@ import TextEditor from "../../components/slate/editor";
 import "./page.css";
 
 export async function pageLoader({ params }) {
+  console.log("pageLoader");
   await new Promise((res) => {
     setTimeout(res, 300);
   });
