@@ -9,9 +9,11 @@ import {
 } from "react-router-dom";
 import { AwaitError } from "../../components/errors/errors";
 import Loading from "../../components/loading/loading";
+import DateFormat from "../../utils/DateFormat";
 import "./category.css";
 
 export async function categoryLoader({ params }) {
+  console.log("categoryLoader");
   await new Promise((res) => {
     setTimeout(res, 300);
   });
@@ -58,12 +60,15 @@ const Article = ({ post }) => {
     <article key={post.label}>
       <header>
         <h2>{post.label}</h2>
-        <span>{post.category} •</span>
+        <Link to={"/Blog/" + post.category}>{post.category}</Link>
         <span>écrit par {post.author}</span>
+        <time>le {DateFormat(post.date)}</time>
       </header>
-      <img src={post.picture} alt="" />
-      <p ref={ref}></p>
-      <Link to={post.label}>Lire la suite</Link>
+      <section>
+        <img src={post.picture} alt="" />
+        <p ref={ref}></p>
+        <Link to={post.label}>Lire la suite</Link>
+      </section>
     </article>
   );
 };
