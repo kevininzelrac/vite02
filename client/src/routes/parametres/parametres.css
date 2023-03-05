@@ -1,61 +1,134 @@
 .parametres {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  z-index: 1;
-  width: 280px;
-  height: 420px;
+  justify-content: center;
+  z-index: 0;
+  width: 310px;
+  height: auto;
   background-color: ghostwhite;
-  padding: 0px;
+  padding: 10px 0;
   border-radius: 6px;
+  color: var(--anthracite);
 }
 
-.parametres form {
+.parametres > h2 {
+  display: flex;
+  justify-content: center;
+}
+
+.parametres > header {
+  position: relative;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding: 0 0 0 0.5rem;
+  background-color: transparent;
+}
+.parametres > header > img {
+  height: 100px;
+  width: 100px;
+  margin: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--anthracite);
+  box-shadow: var(--shade01);
+}
+
+.parametres > form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-self: center;
-  height: 100%;
-}
-
-.parametres form fieldset {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  width: 90%;
   height: fit-content;
 }
 
-.parametres form label {
-  font-weight: bold;
-  font-size: small;
-  margin-bottom: 4px;
-}
-
-.parametres form span {
-  font-weight: normal;
-  font-size: small;
-}
-
-.parametres form button {
-  width: fit-content;
-  margin: 4px 0;
-  padding: 6px;
-  color: ghostwhite;
-  background: var(--gradient01);
-  box-shadow: var(--shade02);
-  border: none;
-  border-radius: 6px;
+.parametres > form > fieldset {
+  position: relative;
+  height: 30px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  border: none;
+  margin: 0 0 10px 0;
 }
 
-.parametres form button:hover {
+.parametres > form > fieldset label {
+  background-color: ghostwhite;
+  width: 192px;
+  text-transform: capitalize;
+}
+.parametres > form > fieldset input,
+.parametres > form > fieldset label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 190px;
+  height: 20px;
+  font-weight: normal;
+  font-size: 1rem;
+  /* padding: 0.2rem; */
+
+  border: none;
+  animation-duration: 400ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.parametres > form > fieldset > button {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: auto;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: ghostwhite;
+  background: var(--gradient01);
+}
+
+.parametres > form button:hover {
   background: var(--anthracite);
   cursor: pointer;
 }
 
-.parametres form input[type="password"] {
-  width: 8rem;
+.parametres > form > fieldset > label.avatar,
+.parametres > form > fieldset > input.avatar {
+  overflow: scroll;
+}
+
+.parametres > form > fieldset.password {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.parametres > form > fieldset.password > label {
+  height: auto;
+}
+.parametres > form > fieldset.password > label,
+.parametres > form > fieldset.password > input[type="password"] {
+  margin: 1px 0;
+  padding: 0;
+  position: relative;
+  font-size: 1rem;
+}
+
+.parametres > form > button {
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: ghostwhite;
+  background: var(--gradient01);
+  margin: 10px 0;
 }
