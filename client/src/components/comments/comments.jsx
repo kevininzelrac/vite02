@@ -7,10 +7,6 @@ import Loading from "../loading/loading";
 
 export default function Comments({ _id }) {
   const { socket } = useOutletContext();
-<<<<<<< HEAD
-=======
-  const navigation = useNavigation();
->>>>>>> dev
   const [isPending, setIsPending] = useState(true);
   const [comments, setComments] = useState();
 
@@ -57,11 +53,7 @@ export default function Comments({ _id }) {
           }}
         >
           <h4>Commentaires</h4>
-<<<<<<< HEAD
           <Recursive comments={comments} />
-=======
-          {comments && <Recursive comments={comments} />}
->>>>>>> dev
           <Form _id={_id} key={comments}>
             Ajouter un commentaire
           </Form>
