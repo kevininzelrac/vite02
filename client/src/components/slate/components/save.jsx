@@ -7,10 +7,10 @@ export default function Save({ label, about }) {
   const isIdle = fetcher.state === "idle";
   return (
     <>
-      <fetcher.Form method="post" action="Save">
+      <fetcher.Form method="post" /* action="Save" */>
         <input type="hidden" name="label" value={label} />
         <input type="hidden" name="about" value={serialize(about)} />
-        <button type="submit">
+        <button type="submit" className="save">
           <Icon format="save" />
         </button>
       </fetcher.Form>
