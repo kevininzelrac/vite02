@@ -11,8 +11,8 @@ header {
   align-items: center;
 }
 h1 {
-  margin: 0;
-  padding: 0 0 0 0px;
+  /* margin: 0;
+  padding: 0 ; */
   text-transform: uppercase;
   /* font-family: "Raleway", sans-serif; */
   font-family: var(--majormono);
@@ -24,4 +24,5 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   /* text-shadow: var(--shade01); */
+  width: 100%;
 }

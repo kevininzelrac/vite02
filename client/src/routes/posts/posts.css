@@ -1,16 +1,23 @@
 main article {
   display: flex;
   flex-direction: column;
-  width: var(--sectionWidth);
-  margin: 30px 0 30px;
+  width: var(--mainWidth);
+  height: fit-content;
+  margin-bottom: 30px;
+  padding: 0;
   animation-fill-mode: forwards;
 }
-main article a,
-main article a:visited {
-  text-decoration: none;
-  color: var(--blue);
-  font-style: italic;
-  text-align: right;
+main article header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
+  width: 100%;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
 }
 
 main article header a,
@@ -21,16 +28,6 @@ main article header a:visited {
   margin-right: 5px;
 }
 
-main article header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: fit-content;
-  margin: 0;
-  padding: 0;
-}
-
 main article header h2 {
   width: fit-content;
   height: fit-content;
@@ -38,17 +35,17 @@ main article header h2 {
   padding: 0;
   text-transform: capitalize;
 }
-main article header span {
+main article header div span {
   display: inline;
   width: fit-content;
   height: fit-content;
   margin: 0 0.4rem 0 0;
   padding: 0;
-  text-transform: none;
+  /* text-transform: none; */
   color: var(--darkGrey);
   font-size: clamp(11px, 0.8rem, 30px);
 }
-main article header time {
+main article header div time {
   width: fit-content;
   height: fit-content;
   margin: 0 0 0 0;
@@ -57,12 +54,26 @@ main article header time {
   color: var(--darkGrey);
   font-size: clamp(11px, 0.8rem, 30px);
 }
-main article img {
+
+main article a,
+main article a:visited {
+  text-decoration: none;
+  color: var(--blue);
+  font-style: italic;
+  text-align: right;
+}
+
+main article section {
+  width: 100%;
+  height: auto;
+}
+
+main article section img {
   border-radius: 50%;
   shape-outside: circle();
   float: left;
   margin: 10px 10px 0 0;
-  width: clamp(140px, 40vw, 160px);
+  width: var(--imgWidth);
   box-shadow: var(--shade01);
 }
 
@@ -78,8 +89,8 @@ main article p::after {
   clear: both;
 }
 
-@media only screen and (max-width: 700px) {
+/* @media only screen and (max-width: 700px) {
   main article header {
     display: block;
   }
-}
+} */

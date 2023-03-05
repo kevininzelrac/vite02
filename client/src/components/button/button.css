@@ -1,40 +1,57 @@
-nav a,
-nav button {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 0;
-  width: var(--width);
-  height: var(--height);
-  padding: var(--padding);
-  text-decoration: none;
-  background-color: var(--anthracite);
-  transition: background-color 0.2s ease;
-  font-size: 10px;
-  font-weight: 400;
-  color: ghostwhite;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: var(--shade01);
-  border: none;
+@media only screen and (min-width: 700px) {
+  nav a,
+  nav button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    width: var(--width);
+    height: var(--height);
+    padding: var(--padding);
+    text-decoration: none;
+    background-color: var(--anthracite);
+    transition: background-color 0.2s ease;
+    font-size: 10px;
+    font-weight: 400;
+    color: ghostwhite;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: var(--shade01);
+    border: none;
+  }
+
+  nav a:hover,
+  nav button:hover {
+    background-color: black;
+  }
+
+  nav a.active,
+  nav button.active {
+    background-color: var(--blue);
+  }
+
+  nav a.pending {
+    color: var(--blue);
+  }
 }
 
-nav a:hover,
-nav button:hover {
-  background-color: black;
-}
-
-nav a.active,
-nav button.active {
-  /* background: linear-gradient(
-    180deg,
-    rgba(51, 102, 153, 1) 100%,
-    rgba(51, 83, 153, 1) 100%
-  ); */
-  background-color: var(--blue);
-}
-
-nav a.pending {
-  color: var(--blue);
+@media only screen and (max-width: 700px) {
+  nav a,
+  nav button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    width: 100%;
+    height: var(--height);
+    padding: var(--padding);
+    text-decoration: none;
+    background-color: var(--anthracite);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    box-shadow: var(--shade01);
+    border: none;
+  }
 }

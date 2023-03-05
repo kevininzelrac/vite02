@@ -6,8 +6,11 @@
 
   --margin: 2px 10px;
   --padding: 4px 0px;
+  --time: 300ms;
 
-  --rootW: 600px;
+  /* --rootW: 600px; */
+  --mainWidth: clamp(100px, 90vw, 600px);
+  --imgWidth: clamp(140px, 40vw, 160px);
 
   --anthracite: #292929;
   --blue: #336699;

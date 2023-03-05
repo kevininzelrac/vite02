@@ -18,7 +18,7 @@ function withVoids(editor) {
 }
 
 export default function TextEditor({ data, user }) {
-  data?.about?.includes("<" || ">")
+  data?.about?.includes("<p>" && "</p>")
     ? (data.about = data.about)
     : (data.about = "<p>" + data.about + "</p>");
 
