@@ -56,7 +56,7 @@ const Block = ({ element, children }) => {
             size.width,
             ref.current?.parentElement.offsetWidth
           ),
-          height: size.height + "px",
+          /*  height: size.height + "px", */
           boxShadow: selected && focused ? "0 0 0 3px #B4D5FF" : " none ",
           zIndex: selected && focused ? "1" : " inherit ",
         }}
