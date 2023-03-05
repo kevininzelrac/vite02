@@ -13,7 +13,6 @@ import DateFormat from "../../utils/DateFormat";
 import "./posts.css";
 
 export async function postsLoader() {
-  console.log("postLoader");
   await new Promise((res) => {
     setTimeout(res, 300);
   });
@@ -58,9 +57,11 @@ const Article = ({ post }) => {
     <article key={post.label}>
       <header>
         <h2>{post.label}</h2>
-        <Link to={"/Blog/" + post.category}>{post.category}</Link>
-        <span>écrit par {post.author}</span>
-        <time>le {DateFormat(post.date)}</time>
+        <div>
+          <Link to={"/Blog/" + post.category}>{post.category}</Link>
+          <span>écrit par {post.author}</span>
+          <time>le {DateFormat(post.date)}</time>
+        </div>
       </header>
       <section>
         <img src={post.picture} alt="" />

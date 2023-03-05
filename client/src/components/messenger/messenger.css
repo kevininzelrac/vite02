@@ -1,0 +1,41 @@
+.messenger {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  height: fit-content;
+  background-color: ghostwhite;
+  border: 1px solid var(--anthracite);
+  color: var(--anthracite);
+  box-shadow: var(--shade01);
+  border-radius: 6px 6px 0 0;
+}
+
+.messenger h3 {
+  padding: 2px;
+  background: var(--gradient01);
+  color: ghostwhite;
+  font-size: 0.9rem;
+  font-weight: 100;
+  text-align: center;
+  text-transform: uppercase;
+}
+.messenger div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.messenger div img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--anthracite);
+  margin: 4px;
+}
+
+.messenger div span {
+  color: var(--anthracite);
+}

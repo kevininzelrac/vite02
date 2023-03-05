@@ -4,7 +4,7 @@ const { privateRoute } = require("../middlewares/privateRoute");
 
 router.get("/", privateRoute, async (req, res) => {
   try {
-    res.send({ user: await req.user });
+    res.send({ user: req.user, accessToken: req.accessToken });
   } catch (error) {
     res.send({ error: error });
   }

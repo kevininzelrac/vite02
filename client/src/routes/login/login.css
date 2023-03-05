@@ -1,29 +1,39 @@
 .loginForm {
+  width: 280px;
+  height: 340px;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   color: var(--anthracite);
-  z-index: 11;
   background: ghostwhite;
   border-radius: 8px;
-  width: 280px;
-  height: 340px;
-  /* margin: 6rem auto 8.1rem auto; */
 }
-.loginForm h4 {
-  /* font-family: "Raleway Thin", sans-serif; */
+.loginForm > h4 {
+  position: relative;
+  display: block;
+  width: fit-content;
   letter-spacing: 4px;
   text-align: center;
   margin: 0;
   padding: 0;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(
+    0.25turn,
+    rgb(51, 102, 153),
+    rgb(142, 186, 231)
+  );
+  border-image-slice: 1;
 }
 
-.loginForm fieldset {
+.loginForm > fieldset {
   border: none;
+  width: 90%;
 }
 
-.loginForm .underline {
+.loginForm > fieldset > .underline {
+  width: 100%;
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(
     0.25turn,
@@ -35,17 +45,15 @@
 
 .loginForm label {
   position: relative;
-  width: 90%;
-  /* font-family: "Raleway", sans-serif; */
+  width: 100%;
   font-size: 11pt;
   text-align: left;
-  /*  margin-top: 20px; */
 }
 
 .loginForm input {
   position: relative;
   width: 90%;
-  font-size: 10pt;
+  font-size: 1rem;
   background: ghostwhite;
   border: none;
   outline: none;

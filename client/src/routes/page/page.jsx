@@ -6,6 +6,7 @@ import {
   useLoaderData,
   useNavigation,
   useRouteLoaderData,
+  useOutletContext,
 } from "react-router-dom";
 import { AwaitError } from "../../components/errors/errors";
 import Loading from "../../components/loading/loading";
@@ -13,7 +14,6 @@ import TextEditor from "../../components/slate/editor";
 import "./page.css";
 
 export async function pageLoader({ params }) {
-  console.log("pageLoader");
   await new Promise((res) => {
     setTimeout(res, 300);
   });
@@ -27,9 +27,24 @@ export async function pageLoader({ params }) {
   return defer({ page });
 }
 
+export async function pageAction({ request }) {
+  const formData = await request.formData();
+  const update = Object.fromEntries(formData);
+  const response = await fetch("/api/updatePage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(update),
+  });
+  const data = await response.json();
+  return await data;
+}
+
 export default function Page() {
-  const { page } = useLoaderData();
   const { user } = useRouteLoaderData("navbar");
+  const { page } = useLoaderData();
+  const { socket } = useOutletContext();
+
   let navigation = useNavigation();
 
   return (
@@ -48,7 +63,7 @@ export default function Page() {
           )}
         </Await>
       </Suspense>
-      <Outlet />
+      <Outlet context={{ socket }} />
     </>
   );
 }

@@ -11,7 +11,7 @@ import Header from "./components/header/header";
 import Login, { loginAction } from "./routes/login/login";
 import Modal from "./components/modal/modal";
 import Navbar, { navbarLoader } from "./components/navbar/navbar";
-import Page, { pageLoader } from "./routes/page/page";
+import Page, { pageAction, pageLoader } from "./routes/page/page";
 import Posts, { postsLoader } from "./routes/posts/posts";
 import { RouteError } from "./components/errors/errors";
 import Dashboard from "./routes/dashboard/dashboard";
@@ -23,8 +23,7 @@ import SinglePost, {
 import "./main.css";
 import "./variables.css";
 import "./animations.css";
-import Parametres from "./routes/parametres/parametres";
-import { saveAction } from "./routes/save/save";
+import Parametres, { paramsAction } from "./routes/parametres/parametres";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,11 +41,15 @@ const router = createBrowserRouter(
         id="page"
         element={<Page />}
         loader={pageLoader}
+        action={pageAction}
         errorElement={<RouteError />}
       >
-        <Route path="Save" action={saveAction} />
         <Route element={<Modal />}>
-          <Route path="Parametres" element={<Parametres />} />
+          <Route
+            path="Parametres"
+            element={<Parametres />}
+            action={paramsAction}
+          />
           <Route path="Dashboard" element={<Dashboard />} />
           <Route path="Login" element={<Login />} action={loginAction} />
         </Route>
@@ -60,9 +63,13 @@ const router = createBrowserRouter(
         errorElement={<RouteError />}
       >
         <Route element={<Modal />}>
-          <Route path="Parametres" element={<Parametres />} />
+          <Route
+            path="Parametres"
+            element={<Parametres />}
+            action={paramsAction}
+          />
           <Route path="Dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} action={loginAction} />
+          <Route path="Login" element={<Login />} action={loginAction} />
         </Route>
       </Route>
 
@@ -74,9 +81,13 @@ const router = createBrowserRouter(
         errorElement={<RouteError />}
       >
         <Route element={<Modal />}>
-          <Route path="Parametres" element={<Parametres />} />
+          <Route
+            path="Parametres"
+            element={<Parametres />}
+            action={paramsAction}
+          />
           <Route path="Dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} action={loginAction} />
+          <Route path="Login" element={<Login />} action={loginAction} />
         </Route>
       </Route>
 
@@ -88,9 +99,13 @@ const router = createBrowserRouter(
         errorElement={<RouteError />}
       >
         <Route element={<Modal />}>
-          <Route path="Parametres" element={<Parametres />} />
+          <Route
+            path="Parametres"
+            element={<Parametres />}
+            action={paramsAction}
+          />
           <Route path="Dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} action={loginAction} />
+          <Route path="Login" element={<Login />} action={loginAction} />
         </Route>
       </Route>
     </Route>
@@ -99,7 +114,6 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Header />
     <RouterProvider router={router} />
   </React.StrictMode>
 );
