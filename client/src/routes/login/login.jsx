@@ -1,11 +1,13 @@
 import { redirect, useFetcher } from "react-router-dom";
 import "./login.css";
+import { io } from "socket.io-client";
 
 export async function loginAction({ request }) {
   switch (request.method) {
     case "POST": {
       const formData = await request.formData();
       const update = Object.fromEntries(formData);
+      const { name, password } = update;
       const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -15,6 +17,9 @@ export async function loginAction({ request }) {
       if (!response.ok) {
         return await response.json();
       }
+      /* const socket = io.connect(location.origin);
+      socket.emit("login", { name });
+      socket.emit("fetchUsers", { name }); */
       //const data = await response.json();
       //console.log(data);
       //return data;
@@ -22,11 +27,18 @@ export async function loginAction({ request }) {
       return redirect(pathname?.replace("/Login", ""));
     }
     case "DELETE": {
+      const formData = await request.formData();
+      const update = Object.fromEntries(formData);
+      const { name } = update;
+      /* const socket = io.connect(location.origin);
+      socket.emit("logout", { name });
+      socket.emit("fetchUsers", { name }); */
       const response = await fetch("/api/logout", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
+
       const data = await response.json();
       return data;
     }
