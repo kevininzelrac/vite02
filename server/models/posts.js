@@ -8,7 +8,8 @@ const PostsSchema = new mongoose.Schema({
     type: String,
   },
   author: {
-    type: String,
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "users",
   },
   label: {
     type: String,
