@@ -8,12 +8,18 @@ export default function Rooms() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    socket.emit("fetchRooms");
-    socket.on("rooms", (rooms) => {
-      const filtered = rooms.filter(({ blob }) => blob !== user.name);
+    (async () => {
+      try {
+        socket.emit("fetchRooms");
+        socket.on("rooms", (rooms) => {
+          const filtered = rooms.filter(({ blob }) => blob !== user.name);
 
-      setRooms(filtered);
-    });
+          setRooms(filtered);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
     return () => {
       socket.off("rooms");
     };
@@ -35,17 +41,23 @@ const Room = ({ blob, _id, from, to, status, message }) => {
   const [STATUS, setStatus] = useState(status);
 
   useEffect(() => {
-    socket.on("status", (data) => {
-      data._id === _id && setStatus(data.status);
-    });
-    if (to._id === user._id && STATUS !== "read") {
-      socket.emit("status", {
-        from,
-        to,
-        _id: _id,
-        status: from._id === room?._id ? "read" : "received",
-      });
-    }
+    (async () => {
+      try {
+        socket.on("status", (data) => {
+          data._id === _id && setStatus(data.status);
+        });
+        if (to._id === user._id && STATUS !== "read") {
+          socket.emit("status", {
+            from,
+            to,
+            _id: _id,
+            status: from._id === room?._id ? "read" : "received",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, [room]);
 
   return (
