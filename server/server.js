@@ -26,7 +26,6 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: process.env.ORIGIN,
-    //origin: "*",
   },
 });
 
@@ -67,7 +66,6 @@ io.on("connection", async (socket) => {
       { $set: { socket: false } }
     );
     const users = await UsersModel.find(
-      //{ socket: { $nin: ["", null] } },
       { socket: { $ne: false } },
       { password: 0, __v: 0 }
     );
