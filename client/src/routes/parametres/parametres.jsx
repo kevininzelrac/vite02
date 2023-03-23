@@ -20,6 +20,46 @@ export async function paramsAction({ request }) {
   return await data;
 }
 
+export default function Parametres() {
+  const { user, accessToken } = useRouteLoaderData("layout");
+  const fetcher = useFetcher();
+  const idle = fetcher.state === "idle";
+  const error = fetcher.data?.error;
+  const success = fetcher.data?.success;
+
+  const handleSubmit = () => {
+    fetcher.submit({ accessToken: accessToken }, { method: "post" });
+  };
+
+  return (
+    <div className="parametres">
+      <h2>Paramètres</h2>
+      <header>
+        <img width="100" src={user?.avatar} />
+        <span>
+          <h3>{user.name}</h3>
+          <small> {user.email} </small>
+        </span>
+      </header>
+
+      <fetcher.Form method="post" onSubmit={handleSubmit}>
+        <Input name="avatar">{user.avatar}</Input>
+        <Input name="name">{user.name}</Input>
+        <Input name="email">{user.email}</Input>
+        <Password key={fetcher?.data?.success} />
+        {!idle ? (
+          fetcher.state
+        ) : error ? (
+          <label>{error}</label>
+        ) : (
+          <label>{success}</label>
+        )}
+        <button type="submit">Enregistrer</button>
+      </fetcher.Form>
+    </div>
+  );
+}
+
 const Input = ({ name, type, children }) => {
   const [toggle, setToggle] = useState(true);
   const [value, setValue] = useState(children);
@@ -32,7 +72,7 @@ const Input = ({ name, type, children }) => {
           animationName: toggle ? "jumpIn" : "jumpOut",
         }}
       >
-        {name}
+        {value}
       </label>
       <input
         className={name}
@@ -81,7 +121,7 @@ const Password = () => {
       </label>
       <input type="hidden" name="password" value={verified} />
       <input
-        required
+        //required
         style={{
           border: !password
             ? ""
@@ -95,7 +135,7 @@ const Password = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <input
-        required
+        //required
         style={{
           border: !confirm
             ? ""
@@ -123,45 +163,3 @@ const Password = () => {
     </fieldset>
   );
 };
-
-const Parametres = () => {
-  const { user, accessToken } = useRouteLoaderData("navbar");
-  const fetcher = useFetcher();
-  const idle = fetcher.state === "idle";
-  const error = fetcher.data?.error;
-  const success = fetcher.data?.success;
-
-  const handleSubmit = () => {
-    fetcher.submit({ accessToken: accessToken }, { method: "post" });
-  };
-
-  return (
-    <div className="parametres">
-      <h2>Paramètres</h2>
-      <header>
-        <img width="100" src={user?.avatar} />
-        <span>
-          <h3>{user.name}</h3>
-          <small> {user.email} </small>
-        </span>
-      </header>
-
-      <fetcher.Form method="post" onSubmit={handleSubmit}>
-        <Input name="avatar">{user.avatar}</Input>
-        <Input name="name">{user.name}</Input>
-        <Input name="email">{user.email}</Input>
-        <Password key={fetcher?.data?.success} />
-        {!idle ? (
-          fetcher.state
-        ) : error ? (
-          <label>{error}</label>
-        ) : (
-          <label>{success}</label>
-        )}
-        <button type="submit">Enregistrer</button>
-      </fetcher.Form>
-    </div>
-  );
-};
-
-export default Parametres;
