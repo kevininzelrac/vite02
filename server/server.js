@@ -25,8 +25,8 @@ app.use(
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    //origin: process.env.ORIGIN,
-    origin: "*",
+    origin: process.env.ORIGIN,
+    //origin: "*",
   },
 });
 
