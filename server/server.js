@@ -105,9 +105,6 @@ app.use("/api/category", category);
 const singlePost = require("./routes/singlePost");
 app.use("/api/singlePost", singlePost);
 
-const trash = require("./routes/trash");
-app.use("/api/trash", trash);
-
 server.listen(5001, () => {
   console.log(`Server listening on 5001`);
 });
