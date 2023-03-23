@@ -1,0 +1,65 @@
+@media only screen and (min-width: 700px) {
+  .rooms {
+    width: 100%;
+    height: 294px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .rooms {
+    width: 100%;
+    height: 184px;
+  }
+}
+
+.rooms {
+  z-index: 3;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.rooms button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.rooms button .socket {
+  position: absolute;
+  z-index: 1;
+  top: -18px;
+  left: -3px;
+  margin: 0;
+  padding: 0;
+  font-size: 36px;
+  color: green;
+}
+.rooms button img {
+  width: var(--avatarSmall);
+  height: var(--avatarSmall);
+  border-radius: 50%;
+  margin: 4px;
+}
+
+.rooms button span {
+  width: 100%;
+}
+
+.rooms button strong {
+  display: block;
+  text-align: left;
+  color: black;
+}
+.rooms button p {
+  text-align: left;
+  width: 100%;
+  font-size: 0.7rem;
+  height: 0.8rem;
+  overflow: hidden;
+  color: gray;
+}
