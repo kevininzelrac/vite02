@@ -12,9 +12,9 @@ export async function layoutLoader() {
   const data = fetch("/api/user/").then((res) => res.json());
   const { user, accessToken } = await data;
 
-  const socket = io.connect(location.origin, {
+  const socket = io(location.origin, {
     autoConnect: false,
-    transports: ["websocket", "polling"],
+    //transports: ["websocket", "polling"],
     auth: {
       _id: user?._id,
       name: user?.name,
@@ -27,7 +27,7 @@ export async function layoutLoader() {
     nav: nav,
     user: await user,
     accessToken: await accessToken,
-    socket: await socket,
+    socket: socket,
   });
 }
 
