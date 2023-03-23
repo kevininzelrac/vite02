@@ -1,6 +1,6 @@
 const CommentsModel = require("../models/comments");
 
-module.exports = (io, socket) => {
+const comments = (io, socket) => {
   socket.on("getComments", async () => {
     const comments = await CommentsModel.find().sort({ date: 1 }).populate({
       path: "author",
@@ -9,12 +9,12 @@ module.exports = (io, socket) => {
     io.emit("comments", comments);
   });
 
-  socket.on("comment", async ({ author, parent_id, content }) => {
+  socket.on("comment", async ({ user, parent_id, content }) => {
     await new CommentsModel({
-      author: await author,
+      author: await user._id,
       parent_id: await parent_id,
-      date: new Date(),
       content: await content,
+      date: new Date(),
     }).save();
 
     const comments = await CommentsModel.find().sort({ date: 1 }).populate({
@@ -22,5 +22,14 @@ module.exports = (io, socket) => {
       select: "_id avatar name socket",
     });
     io.emit("comments", comments);
+
+    socket.broadcast.emit("notifications", {
+      author: user,
+      date: new Date(),
+      title: "a publié un nouveau commentaire",
+      content: content,
+    });
   });
 };
+
+module.exports = comments;

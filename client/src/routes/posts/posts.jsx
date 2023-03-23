@@ -59,7 +59,7 @@ const Article = ({ post }) => {
         <h2>{post.label}</h2>
         <div>
           <Link to={"/Blog/" + post.category}>{post.category}</Link>
-          <span>écrit par {post.author}</span>
+          <span>écrit par {post.author.name}</span>
           <time>le {DateFormat(post.date)}</time>
         </div>
       </header>

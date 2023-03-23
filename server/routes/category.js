@@ -7,7 +7,12 @@ router.get("/:category", async (req, res) => {
     const category = await PostsModel.find({
       //type: "post",
       category: req.params.category,
-    }).sort({ date: -1 });
+    })
+      .sort({ date: -1 })
+      .populate({
+        path: "author",
+        select: "_id avatar name",
+      });
 
     res.send(category);
   } catch (error) {

@@ -6,7 +6,6 @@ import {
   useLoaderData,
   useNavigation,
   useRouteLoaderData,
-  useOutletContext,
 } from "react-router-dom";
 import Comments from "../../components/comments/comments";
 import { AwaitError } from "../../components/errors/errors";
@@ -19,13 +18,9 @@ export async function singlePostLoader({ params }) {
     setTimeout(res, 300);
   });
 
-  const post = fetch("/api/singlePost/" + params.post).then((res) => {
-    try {
-      return res.json();
-    } catch (error) {
-      return error;
-    }
-  });
+  const post = fetch("/api/singlePost/" + params.post).then((res) =>
+    res.json()
+  );
 
   return defer({ post });
 }
@@ -44,9 +39,9 @@ export async function singlePostAction({ request }) {
 }
 
 export default function SinglePost() {
-  const { socket } = useOutletContext();
+  const { user } = useRouteLoaderData("layout");
   const { post } = useLoaderData();
-  const { user } = useRouteLoaderData("navbar");
+
   let navigation = useNavigation();
 
   return (
@@ -64,7 +59,7 @@ export default function SinglePost() {
                 <TextEditor key={post?.about} data={post} user={user} />
                 {user && <Comments _id={post._id} key={post._id} />}
               </main>
-              <Outlet context={{ socket }} />
+              <Outlet />
             </>
           )}
         </Await>

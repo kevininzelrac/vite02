@@ -5,6 +5,7 @@ const privateRoute = async (req, res, next) => {
   try {
     const authHeader = await req.headers["authorization"];
     const accessToken = await authHeader?.split(" ")[1];
+    //console.log("PrivateRoute Accesstoken :" + accessToken);
 
     const verifiedAccess = verify(accessToken, process.env.ACCESS_TOKEN);
     if (verifiedAccess) {

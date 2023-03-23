@@ -29,9 +29,9 @@ router.post("/", auth, async (req, res) => {
     await user.save();
 
     res.send({
-      accessToken: accessToken,
-      name: await req.user.name,
       user: user,
+      accessToken: accessToken,
+      //name: await req.user.name,
     });
   } catch (error) {
     res.send({ error: error });

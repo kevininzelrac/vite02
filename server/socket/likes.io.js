@@ -1,6 +1,6 @@
 const CommentsModel = require("../models/comments");
 
-module.exports = (io, socket) => {
+const likes = (io, socket) => {
   socket.on("getLike", async () => {
     const likes = await CommentsModel.find({}, { _id: 1, likes: 1 });
     io.emit("likes", likes);
@@ -22,3 +22,5 @@ module.exports = (io, socket) => {
     io.emit("likes", likes);
   });
 };
+
+module.exports = likes;

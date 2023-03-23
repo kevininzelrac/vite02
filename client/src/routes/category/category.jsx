@@ -60,9 +60,11 @@ const Article = ({ post }) => {
     <article key={post.label}>
       <header>
         <h2>{post.label}</h2>
-        <Link to={"/Blog/" + post.category}>{post.category}</Link>
-        <span>écrit par {post.author}</span>
-        <time>le {DateFormat(post.date)}</time>
+        <div>
+          <Link to={"/Blog/" + post.category}>{post.category}</Link>
+          <span>écrit par {post.author.name}</span>
+          <time>le {DateFormat(post.date)}</time>
+        </div>
       </header>
       <section>
         <img src={post.picture} alt="" />

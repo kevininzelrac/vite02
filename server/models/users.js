@@ -19,7 +19,7 @@ const UsersSchema = new mongoose.Schema({
     type: String,
   },
   socket: {
-    type: String,
+    type: Boolean,
   },
 });
 
