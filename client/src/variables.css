@@ -4,6 +4,8 @@
   --width: 90px;
   --height: 20px;
 
+  --avatarSmall: 35px;
+
   --margin: 2px 10px;
   --padding: 4px 0px;
   --time: 300ms;
@@ -15,7 +17,8 @@
   --anthracite: #292929;
   --blue: #336699;
   --shade01: 0px 5px 20px rgba(22, 22, 22, 0.4);
-  --shade02: 0px 3px 10px rgba(22, 22, 22, 0.4);
+  --shade02: 0px 3px 10px rgba(22, 22, 22, 0.2);
+  --shade03: 0px 2px 3px rgba(22, 22, 22, 0.2);
   --gradient01: linear-gradient(#336699, #132140);
 
   --orbitron: "Orbitron", sans-serif;
