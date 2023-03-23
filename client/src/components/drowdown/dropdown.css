@@ -133,6 +133,10 @@
   nav button.active {
     background: var(--blue);
   }
+  nav a.active:hover,
+  nav button.active:hover {
+    color: var(--anthracite);
+  }
   nav .dropdown .menu.active {
     color: var(--blue);
   }

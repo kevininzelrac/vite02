@@ -58,7 +58,6 @@
 .parametres > form > fieldset label {
   background-color: ghostwhite;
   width: 192px;
-  text-transform: capitalize;
 }
 .parametres > form > fieldset input,
 .parametres > form > fieldset label {
