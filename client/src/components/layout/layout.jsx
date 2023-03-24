@@ -13,8 +13,10 @@ export async function layoutLoader() {
   const { user, accessToken } = await data;
 
   const socket = io(location.origin, {
+    upgrade: false,
     autoConnect: false,
     //transports: ["websocket", "polling"],
+    //withCredentials: true,
     auth: {
       _id: user?._id,
       name: user?.name,
