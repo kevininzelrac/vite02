@@ -41,15 +41,17 @@ AVATAR *****************************/
 .parametres > .avatar > span {
   position: absolute;
   top: 0;
-  left: 25%;
+  left: 24%;
   width: 160px;
   height: 160px;
   border: 1px solid lightgray;
   border-radius: 50%;
   align-self: center;
   animation: 300ms ease-in-out forwards 1;
+  perspective: 160px;
+  perspective-origin: left;
 }
-@keyframes turnIn {
+@keyframes rotateYin {
   0% {
     transform: rotateY(180deg);
     opacity: 0;
@@ -65,7 +67,7 @@ AVATAR *****************************/
     opacity: 1;
   }
 }
-@keyframes turnOut {
+@keyframes rotateYout {
   0% {
     transform: rotateY(0deg);
     opacity: 1;
@@ -90,8 +92,6 @@ AVATAR *****************************/
   align-items: center;
 }
 
-/************************************ 
-INPUTS *****************************/
 .parametres .avatar input {
   position: absolute;
   z-index: 1;
@@ -99,6 +99,8 @@ INPUTS *****************************/
   left: 0;
   animation: 300ms ease-in-out forwards 1;
 }
+/************************************ 
+INPUTS *****************************/
 .parametres > fieldset > input {
   width: 100%;
   height: 20px;
@@ -123,6 +125,8 @@ INPUTS *****************************/
   text-align: left;
   border: none;
   animation: 300ms ease-in-out forwards 1;
+  perspective: 50px;
+  perspective-origin: top;
 }
 
 @keyframes rotateXin {
@@ -160,7 +164,7 @@ INPUTS *****************************/
     z-index: 0;
   }
   100% {
-    transform: rotateX(180deg);
+    transform: rotateX(-180deg);
     opacity: 0;
     z-index: 0;
   }

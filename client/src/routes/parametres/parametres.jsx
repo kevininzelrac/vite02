@@ -1,7 +1,7 @@
 import "./parametres.css";
 import { useFetcher, useRouteLoaderData } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 
 export async function paramsAction({ request }) {
@@ -59,13 +59,14 @@ const Avatar = ({ children }) => {
     <fieldset className="avatar">
       <img
         src={value}
-        style={{ animationName: toggle ? "turnOut" : "turnIn" }}
+        style={{ animationName: toggle ? "rotateYout" : "rotateYin" }}
       />
-      <span style={{ animationName: toggle ? "turnIn" : "turnOut" }}>?</span>
+      <span style={{ animationName: toggle ? "rotateYin" : "rotateYout" }}>
+        ?
+      </span>
       <button onClick={() => setToggle(!toggle)}>
-        {toggle ? <VisibilityIcon /> : <EditIcon />}
+        {toggle ? <CloseIcon /> : <EditIcon />}
       </button>
-
       <input
         key={toggle}
         style={{
@@ -104,7 +105,7 @@ const Input = ({ children, name }) => {
         onChange={(e) => setValue(e.target.value)}
       />
       <button onClick={() => setToggle(!toggle)}>
-        {toggle ? <VisibilityIcon /> : <EditIcon />}
+        {toggle ? <CloseIcon /> : <EditIcon />}
       </button>
     </fieldset>
   );
