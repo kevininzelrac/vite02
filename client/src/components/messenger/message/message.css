@@ -1,0 +1,43 @@
+.chat main section span {
+  position: relative;
+  width: 70%;
+  height: auto;
+  margin: 6px 0;
+}
+.chat main section span h5 {
+  margin: 2px 4px;
+}
+.chat main section span p {
+  position: relative;
+  padding: 8px;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  border-radius: 8px;
+
+  overflow-wrap: break-word;
+}
+
+.chat main section .left {
+  align-self: flex-start;
+  margin-left: 4px;
+}
+.chat main section .right {
+  align-self: flex-end;
+  margin-right: 4px;
+}
+.chat main section .left p {
+  background-color: gainsboro;
+}
+.chat main section .right p {
+  background: var(--blue);
+  color: ghostwhite;
+}
+
+.chat main section span small {
+  display: block;
+  width: 100%;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: grey;
+  text-align: right;
+}
