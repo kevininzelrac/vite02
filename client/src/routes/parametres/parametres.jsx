@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
-import { useRouteLoaderData, useFetcher } from "react-router-dom";
 import "./parametres.css";
+import { useFetcher, useRouteLoaderData } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useEffect, useState } from "react";
 
 export async function paramsAction({ request }) {
   const formData = await request.formData();
@@ -32,65 +34,77 @@ export default function Parametres() {
   };
 
   return (
-    <div className="parametres">
-      <h2>Paramètres</h2>
-      <header>
-        <img width="100" src={user?.avatar} />
-        <span>
-          <h3>{user.name}</h3>
-          <small> {user.email} </small>
-        </span>
-      </header>
-
-      <fetcher.Form method="post" onSubmit={handleSubmit}>
-        <Input name="avatar">{user.avatar}</Input>
-        <Input name="name">{user.name}</Input>
-        <Input name="email">{user.email}</Input>
-        <Password key={fetcher?.data?.success} />
-        {!idle ? (
-          fetcher.state
-        ) : error ? (
-          <label>{error}</label>
-        ) : (
-          <label>{success}</label>
-        )}
-        <button type="submit">Enregistrer</button>
-      </fetcher.Form>
-    </div>
+    <fetcher.Form className="parametres" method="post" onSubmit={handleSubmit}>
+      <h2>Parametres</h2>
+      <Avatar>{user.avatar}</Avatar>
+      <Input name="name">{user.name}</Input>
+      <Input name="email">{user.email}</Input>
+      <Password key={success} />
+      {!idle ? (
+        <small>{fetcher.state}</small>
+      ) : error ? (
+        <small>{error}</small>
+      ) : (
+        <small>{success}</small>
+      )}
+      <button type="submit">Sauvegarder</button>
+    </fetcher.Form>
   );
 }
 
-const Input = ({ name, type, children }) => {
-  const [toggle, setToggle] = useState(true);
+const Avatar = ({ children }) => {
+  const [toggle, setToggle] = useState(false);
+  const [value, setValue] = useState(children);
+  return (
+    <fieldset className="avatar">
+      <img
+        src={value}
+        style={{ animationName: toggle ? "turnOut" : "turnIn" }}
+      />
+      <span style={{ animationName: toggle ? "turnIn" : "turnOut" }}>?</span>
+      <button onClick={() => setToggle(!toggle)}>
+        {toggle ? <VisibilityIcon /> : <EditIcon />}
+      </button>
+
+      <input
+        key={toggle}
+        style={{
+          animationName: toggle ? "in" : "out",
+        }}
+        autoFocus={toggle}
+        type="text"
+        name="avatar"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </fieldset>
+  );
+};
+
+const Input = ({ children, name }) => {
+  const [toggle, setToggle] = useState(false);
   const [value, setValue] = useState(children);
 
   return (
-    <fieldset>
+    <fieldset className="input">
       <label
         className={name}
-        style={{
-          animationName: toggle ? "jumpIn" : "jumpOut",
-        }}
+        style={{ animationName: toggle ? "rotateXout" : "rotateXin" }}
       >
         {value}
       </label>
       <input
-        className={name}
+        key={toggle}
         style={{
-          animationName: toggle ? "jumpOut" : "jumpIn",
+          animationName: toggle ? "rotateXin" : "rotateXout",
         }}
-        type={type ?? "text"}
+        autoFocus={toggle}
         name={name}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setToggle(!toggle);
-        }}
-      >
-        {toggle ? "Modifier" : "Aperçu"}
+      <button onClick={() => setToggle(!toggle)}>
+        {toggle ? <VisibilityIcon /> : <EditIcon />}
       </button>
     </fieldset>
   );
@@ -100,14 +114,19 @@ const Password = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [verified, setVerified] = useState("");
-  const [disabled, setDisable] = useState(true);
   const fetcher = useFetcher();
+
   useEffect(() => {
-    setPassword(""), setConfirm(""), setVerified(""), setDisable(true);
+    setPassword(""), setConfirm(""), setVerified("");
   }, [fetcher.state.success]);
 
   useEffect(() => {
-    password && password === confirm ? setDisable(false) : setDisable(true);
+    password && password === confirm && setVerified(password);
+    if (password === confirm) {
+      setVerified(password);
+    } else {
+      setVerified("");
+    }
   }, [password, confirm]);
 
   return (
@@ -115,27 +134,25 @@ const Password = () => {
       <label>
         <small>
           {verified
-            ? "Vos modifications sont pretes à être soumises"
-            : " Réinitialisez votre mot de passe"}
+            ? "Nouveau mot de passe validé"
+            : "Réinitialisez votre mot de passe"}
         </small>
       </label>
       <input type="hidden" name="password" value={verified} />
       <input
-        //required
         style={{
           border: !password
             ? ""
             : password === confirm
-            ? "2px solid green"
-            : "2px solid red",
+            ? "1px solid green"
+            : "1px solid red",
         }}
         type="password"
-        placeholder="New Password"
+        placeholder="Enter New Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <input
-        //required
         style={{
           border: !confirm
             ? ""
@@ -148,18 +165,6 @@ const Password = () => {
         value={confirm}
         onChange={(e) => setConfirm(e.target.value)}
       />
-      <button
-        style={{
-          opacity: disabled ? "0.8" : "1",
-        }}
-        disabled={disabled}
-        onClick={(e) => {
-          e.preventDefault();
-          setVerified(password);
-        }}
-      >
-        Modifier
-      </button>
     </fieldset>
   );
 };
