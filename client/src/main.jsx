@@ -22,7 +22,7 @@ import SinglePost, {
 import "./main.css";
 import "./variables.css";
 import "./animations.css";
-import Layout, { layoutLoader } from "./components/layout/layout";
+import Layout, { layoutLoader } from "./routes/layout/layout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
