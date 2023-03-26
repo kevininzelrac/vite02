@@ -1,10 +1,10 @@
 import { defer, Outlet, useLoaderData } from "react-router-dom";
 import { io } from "socket.io-client";
-import Footer from "../footer/footer";
-import Header from "../header/header";
-import Messenger from "../messenger/messenger";
-import Navbar from "../navbar/navbar";
-import Notifications from "../notifications/notifications";
+import Header from "../../components/header/header";
+import Navbar from "../../components/navbar/navbar";
+import Notifications from "../../components/notifications/notifications";
+import Messenger from "../../components/messenger/messenger";
+import Footer from "../../components/footer/footer";
 
 export async function layoutLoader() {
   const nav = fetch("/api/nav/").then((res) => res.json());
