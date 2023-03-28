@@ -1,42 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { Link } from "react-router-native";
+import { Route, Routes, Navigate, NativeRouter } from "react-router-native";
+import Layout from "./components/layout/layout.jsx";
+import Home from "./routes/home/home";
+import Profil from "./routes/profil/profil";
+import Menu from "./routes/menu/menu";
+import Chat from "./routes/chat/chat";
+import Page from "./routes/page/page";
 
 export default function App() {
-  const [nav, setNav] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch("/api/nav");
-        const data = await response.json();
-        setNav(data.nav);
-        console.log(data.nav);
-      } catch (err) {
-        console.log(err);
-      } finally {
-      }
-    })();
-  }, [nav]);
-
   return (
-    <View style={styles.nav}>
-      {nav.map(({ label }) => (
-        //<Button key={label} title={label} />
-        <Link to={label} key={label}>
-          <Text>{label}</Text>
-        </Link>
-      ))}
-    </View>
+    <NativeRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Navigate to="/Home" />} />
+          <Route index path="/Home" element={<Home />} />
+          <Route path="/Profil" element={<Profil />} />
+          <Route path="/Menu" element={<Menu />} />
+          <Route path=":targetPage" element={<Page />} />
+          <Route path="/Chat" element={<Chat />} />
+        </Route>
+      </Routes>
+    </NativeRouter>
   );
 }
-
-const styles = StyleSheet.create({
-  nav: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    paddingTop: 20,
-  },
-});

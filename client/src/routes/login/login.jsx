@@ -59,7 +59,7 @@ export default function Login() {
         <input className="underline" type="password" name="password" />
       </fieldset>
 
-      <button type="submit">Se connecter</button>
+      <button type="submit">Sign In</button>
     </fetcher.Form>
   );
 }

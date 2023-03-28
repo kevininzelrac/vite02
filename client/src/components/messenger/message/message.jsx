@@ -1,3 +1,4 @@
+import "./message.css";
 import { useContext, useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import { MessengerContext } from "../messenger";
@@ -35,7 +36,7 @@ export default function Message({ from, to, message, _id, date, status }) {
 
   return (
     <span className={from?._id === user._id ? "right" : "left"}>
-      <h5>{from?.name || to?.name}</h5>
+      {/* <h5>{from?.name || to?.name}</h5> */}
       <p>{message}</p>
       <small>
         <time>{DateFormat(date)}</time>

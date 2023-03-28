@@ -17,15 +17,18 @@ mongoose.connect(process.env.HOST);
 const cors = require("cors");
 app.use(
   cors({
-    credentials: true,
     origin: process.env.ORIGIN,
+    //credentials: true,
   })
 );
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
+    transports: ["polling"],
     origin: process.env.ORIGIN,
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
