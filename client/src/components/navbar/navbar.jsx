@@ -1,9 +1,8 @@
+import "./navbar.css";
 import { Suspense, useState, useEffect } from "react";
 import {
   Await,
-  defer,
   Link,
-  Outlet,
   useFetcher,
   useLoaderData,
   useNavigation,
@@ -12,29 +11,12 @@ import Button from "../button/button";
 import Dropdown from "../drowdown/dropdown";
 import { AwaitError } from "../errors/errors";
 import Loading from "../loading/loading";
-import Messenger from "../messenger/messenger";
-import Header from "../header/header";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { io } from "socket.io-client";
-import "./navbar.css";
-import Footer from "../footer/footer";
 
-export async function navbarLoader() {
-  const data = fetch("/api/user/").then((res) => res.json());
-  const { user, accessToken } = await data;
+export default function Navbar() {
+  const { user, nav, socket } = useLoaderData();
 
-  const nav = fetch("/api/nav/").then((res) => res.json());
-
-  return defer({
-    nav: nav,
-    user: await user,
-    accessToken: await accessToken,
-  });
-}
-
-const Navbar = () => {
-  const { nav, user } = useLoaderData();
   const fetcher = useFetcher();
   const [isOpen, setIsOpen] = useState(false);
   let navigation = useNavigation();
@@ -44,15 +26,11 @@ const Navbar = () => {
     !isIdle && setIsOpen(false);
   }, [navigation]);
 
-  const socket = io.connect(location.origin);
-  socket.emit("fetchUsers", { name: user?.name });
-
   return (
     <Suspense fallback={<Loading>Loadind Site ...</Loading>}>
       <Await resolve={nav} errorElement={<AwaitError />}>
         {(nav) => (
           <>
-            <Header />
             <button
               className="burger"
               onClick={() => {
@@ -74,25 +52,23 @@ const Navbar = () => {
                   >
                     Parametres
                   </Link>
-                  {/* <Link to="Dashboard" relative="path">
-                    Dashboard
-                  </Link> */}
-                  <fetcher.Form method="delete" action="Login" relative="path">
-                    <button
-                      type="submit"
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    >
-                      Log Out
-                    </button>
+                  <fetcher.Form
+                    method="delete"
+                    action="Login"
+                    relative="path"
+                    onSubmit={() => {
+                      setIsOpen(false);
+                      socket.close();
+                    }}
+                  >
+                    <button type="submit">Log Out</button>
                   </fetcher.Form>
                 </Dropdown>
               ) : (
                 <Link
                   to="Login"
                   relative="path"
-                  onClick={(e) => {
+                  onClick={() => {
                     setIsOpen(false);
                   }}
                 >
@@ -100,16 +76,12 @@ const Navbar = () => {
                 </Link>
               )}
             </nav>
-            <Outlet context={{ socket }} />
-            {user && <Messenger socket={socket} user={user} />}
-            <Footer />
           </>
         )}
       </Await>
     </Suspense>
   );
-};
-export default Navbar;
+}
 
 const Recursive = ({ nav, parent = "" }) => {
   return (

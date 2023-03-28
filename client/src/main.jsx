@@ -7,15 +7,14 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Header from "./components/header/header";
 import Login, { loginAction } from "./routes/login/login";
 import Modal from "./components/modal/modal";
-import Navbar, { navbarLoader } from "./components/navbar/navbar";
 import Page, { pageAction, pageLoader } from "./routes/page/page";
 import Posts, { postsLoader } from "./routes/posts/posts";
 import { RouteError } from "./components/errors/errors";
 import Dashboard from "./routes/dashboard/dashboard";
 import Category, { categoryLoader } from "./routes/category/category";
+import Parametres, { paramsAction } from "./routes/parametres/parametres";
 import SinglePost, {
   singlePostAction,
   singlePostLoader,
@@ -23,15 +22,15 @@ import SinglePost, {
 import "./main.css";
 import "./variables.css";
 import "./animations.css";
-import Parametres, { paramsAction } from "./routes/parametres/parametres";
+import Layout, { layoutLoader } from "./routes/layout/layout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
-      element={<Navbar />}
-      id="navbar"
-      loader={navbarLoader}
+      element={<Layout />}
+      id="layout"
+      loader={layoutLoader}
       errorElement={<RouteError />}
     >
       <Route index element={<Navigate to="Home" />} />
@@ -113,7 +112,5 @@ const router = createBrowserRouter(
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );

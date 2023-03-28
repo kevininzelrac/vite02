@@ -1,13 +1,12 @@
-import { redirect, useFetcher } from "react-router-dom";
+import { useEffect } from "react";
+import { useFetcher, useNavigate } from "react-router-dom";
 import "./login.css";
-import { io } from "socket.io-client";
 
 export async function loginAction({ request }) {
   switch (request.method) {
     case "POST": {
       const formData = await request.formData();
       const update = Object.fromEntries(formData);
-      const { name, password } = update;
       const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -17,30 +16,18 @@ export async function loginAction({ request }) {
       if (!response.ok) {
         return await response.json();
       }
-      /* const socket = io.connect(location.origin);
-      socket.emit("login", { name });
-      socket.emit("fetchUsers", { name }); */
-      //const data = await response.json();
-      //console.log(data);
-      //return data;
-      let { pathname } = new URL(request.url);
-      return redirect(pathname?.replace("/Login", ""));
+      const data = await response.json();
+      const { user, accessToken } = data;
+      return { user, accessToken };
     }
     case "DELETE": {
       const formData = await request.formData();
       const update = Object.fromEntries(formData);
-      const { name } = update;
-      /* const socket = io.connect(location.origin);
-      socket.emit("logout", { name });
-      socket.emit("fetchUsers", { name }); */
-      const response = await fetch("/api/logout", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+      const response = await fetch("/api/logout");
 
       const data = await response.json();
-      return data;
+      const { user, accessToken } = data;
+      return { user, accessToken };
     }
 
     default:
@@ -50,7 +37,14 @@ export async function loginAction({ request }) {
 
 export default function Login() {
   const fetcher = useFetcher();
-  const error = fetcher?.data?.error;
+  const error = fetcher.data?.error;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (fetcher.data?.accessToken) {
+      navigate(-1);
+    }
+  }, [fetcher.data?.accessToken]);
 
   return (
     <fetcher.Form className="loginForm" method="post">
@@ -65,7 +59,7 @@ export default function Login() {
         <input className="underline" type="password" name="password" />
       </fieldset>
 
-      <button type="submit">Se connecter</button>
+      <button type="submit">Sign In</button>
     </fetcher.Form>
   );
 }

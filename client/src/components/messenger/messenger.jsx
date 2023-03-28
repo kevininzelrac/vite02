@@ -1,40 +1,29 @@
-import { useState, useEffect } from "react";
 import "./messenger.css";
+import { createContext, useState } from "react";
+import Chat from "./chat/chat";
+import Contacts from "./contacts/contacts";
+import Rooms from "./rooms/rooms";
 
-export default function Messenger({ socket, user }) {
-  const [users, setUsers] = useState([]);
+export const MessengerContext = createContext();
+
+export default function Messenger() {
   const [open, setOpen] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await socket.emit("fetchUsers", { name: user.name });
-        await socket.on("users", async ({ name, users }) => {
-          const filtered = await users.filter(({ name }) => name !== user.name);
-          setUsers(filtered);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-    return () => {
-      socket.off("users");
-    };
-  }, []);
+  const [room, setRoom] = useState();
 
   return (
-    <div className="messenger">
-      <h3 style={{ cursor: "pointer" }} onClick={() => setOpen(!open)}>
-        Contacts
-      </h3>
-
-      {open &&
-        users.map(({ name, avatar }) => (
-          <div className="user" key={name}>
-            <img src={avatar} />
-            <span>{name}</span>
-          </div>
-        ))}
-    </div>
+    <MessengerContext.Provider value={{ open, room, setRoom }}>
+      <div className="messenger">
+        <header onClick={() => setOpen(!open)}>
+          <h5>Messenger</h5>
+        </header>
+        {open && (
+          <>
+            <Contacts />
+            <Rooms />
+            {room && <Chat />}
+          </>
+        )}
+      </div>
+    </MessengerContext.Provider>
   );
 }

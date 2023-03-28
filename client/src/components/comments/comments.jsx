@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useRouteLoaderData, useOutletContext } from "react-router-dom";
-import DateFormat from "../../utils/DateFormat";
 import "./comments.css";
+import { useEffect, useState } from "react";
+import { useRouteLoaderData } from "react-router-dom";
+import DateFormat from "../../utils/DateFormat";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Loading from "../loading/loading";
 
 export default function Comments({ _id }) {
-  const { socket } = useOutletContext();
+  const { socket } = useRouteLoaderData("layout");
   const [isPending, setIsPending] = useState(true);
   const [comments, setComments] = useState();
 
@@ -38,7 +38,7 @@ export default function Comments({ _id }) {
       }
     })();
     return () => {
-      socket.off("data");
+      socket.off("comments");
     };
   }, []);
   return (
@@ -92,8 +92,7 @@ const Recursive = ({ comments }) => {
 };
 
 const Form = ({ _id, children }) => {
-  const { socket } = useOutletContext();
-  const { user } = useRouteLoaderData("navbar");
+  const { user, socket } = useRouteLoaderData("layout");
   const [content, setContent] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -103,7 +102,7 @@ const Form = ({ _id, children }) => {
       e.preventDefault();
       setIsPending(true);
       await socket.emit("comment", {
-        author: user._id,
+        user: user,
         parent_id: _id,
         content: content,
       });
@@ -145,7 +144,7 @@ const Form = ({ _id, children }) => {
 };
 
 const LikeIcon = ({ comment_id }) => {
-  const { socket } = useOutletContext();
+  const { socket } = useRouteLoaderData("layout");
   const [like, setLike] = useState();
 
   useEffect(() => {
@@ -178,8 +177,7 @@ const LikeIcon = ({ comment_id }) => {
 };
 
 const Like = ({ comment_id }) => {
-  const { socket } = useOutletContext();
-  const { user } = useRouteLoaderData("navbar");
+  const { user, socket } = useRouteLoaderData("layout");
   const [like, setLike] = useState();
   const [isPending, setIsPending] = useState(false);
 

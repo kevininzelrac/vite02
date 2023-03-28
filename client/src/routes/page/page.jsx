@@ -6,7 +6,6 @@ import {
   useLoaderData,
   useNavigation,
   useRouteLoaderData,
-  useOutletContext,
 } from "react-router-dom";
 import { AwaitError } from "../../components/errors/errors";
 import Loading from "../../components/loading/loading";
@@ -41,9 +40,8 @@ export async function pageAction({ request }) {
 }
 
 export default function Page() {
-  const { user } = useRouteLoaderData("navbar");
+  const { user } = useRouteLoaderData("layout");
   const { page } = useLoaderData();
-  const { socket } = useOutletContext();
 
   let navigation = useNavigation();
 
@@ -63,7 +61,7 @@ export default function Page() {
           )}
         </Await>
       </Suspense>
-      <Outlet context={{ socket }} />
+      <Outlet />
     </>
   );
 }

@@ -1,40 +1,24 @@
-const CommentsModel = require("../models/comments");
 const UsersModel = require("../models/users");
 
-module.exports = (io, socket) => {
-  socket.on("fetchUsers", async ({ name }) => {
-    await UsersModel.updateMany(
-      { refreshToken: { $nin: ["", null] } },
-      { $set: { socket: "on" } }
-    );
-    await UsersModel.updateMany(
-      { refreshToken: ["", null] },
-      { $set: { socket: "off" } }
-    );
+const users = async (io, socket) => {
+  /* const user = await UsersModel.findOne(
+    { name: await socket.user.name, socket: { $nin: ["", null] } },
+    { password: 0, __v: 0 }
+  );
+  if (!user) { */
+  await UsersModel.updateOne(
+    { name: await socket.user.name },
+    { $set: { socket: true } }
+  );
+  const users = await UsersModel.find(
+    { socket: true },
+    { password: 0, __v: 0, email: 0, refreshToken: 0 }
+  );
+  io.emit("users", users);
+  socket.on("fetchUsers", () => socket.emit("users", users));
+  console.log(socket.user.name + " just connected ");
 
-    const users = await UsersModel.find(
-      { socket: "on" },
-      { password: 0, __v: 0 }
-    );
-    io.emit("users", { name, users });
-    const comments = await CommentsModel.find().sort({ date: 1 }).populate({
-      path: "author",
-      select: "_id avatar name socket",
-    });
-    io.emit("comments", comments);
-  });
-
-  socket.on("login", async ({ name }) => {
-    await UsersModel.updateOne(
-      { name: await name },
-      { $set: { socket: "on" } }
-    );
-  });
-
-  socket.on("logout", async ({ name }) => {
-    await UsersModel.updateOne(
-      { name: await name },
-      { $set: { socket: "off" } }
-    );
-  });
+  //}
 };
+
+module.exports = users;
