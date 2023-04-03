@@ -17,7 +17,7 @@ jobs:
 
       - name: docker_compose Up
         env:
-          HOST: ${{ .secrets.HOST  }}
+          HOST: ${{ secrets.HOST  }}
         run: docker-compose -f docker-compose.prod.yml up
 
   Deploy:
