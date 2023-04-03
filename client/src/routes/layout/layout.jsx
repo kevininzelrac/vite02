@@ -13,9 +13,9 @@ export async function layoutLoader() {
   const { user, accessToken } = await data;
 
   const socket = io(location.origin, {
-    upgrade: false,
+    upgrade: true,
     autoConnect: false,
-    //transports: ["websocket", "polling"],
+    transports: ["websocket", "polling"],
     //withCredentials: true,
     auth: {
       _id: user?._id,
