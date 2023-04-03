@@ -1,8 +1,8 @@
-name: CI/CD counter app
+name: CI/CD vite02
 
 on:
   push:
-    branches: [master]
+    branches: [prod]
 
 jobs:
   #First we will see the application build or not , then we will deploy in EC2
