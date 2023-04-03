@@ -13,7 +13,6 @@ import DateFormat from "../../utils/DateFormat";
 import "./category.css";
 
 export async function categoryLoader({ params }) {
-  console.log("categoryLoader");
   await new Promise((res) => {
     setTimeout(res, 300);
   });

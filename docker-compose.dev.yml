@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  nginx:
+    depends_on:
+      - client
+      - server
+      - mongo
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "80:80"
+
+  client:
+    image: client-dev-image
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: client-dev-container
+    volumes:
+      - ./client:/client
+      - client_node_modules:/client/node_modules/
+    restart: always
+    depends_on:
+      - server
+
+  server:
+    image: server-image
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server-container
+    volumes:
+      - ./server:/server
+      - server_node_modules:/server/node_modules/
+    restart: always
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    volumes:
+      - mongoDb:/data/db
+
+volumes:
+  mongoDb:
+  client_node_modules:
+  server_node_modules:

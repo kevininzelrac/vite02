@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  client:
+    image: client-image
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client-container
+    restart: always
+    ports:
+      - "80:80"
+    #expose:
+    #  - "80"
+    depends_on:
+      - server
+    networks:
+      - frontEnd
+
+  server:
+    image: server-image
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server-container
+    restart: always
+    #ports:
+    #  - "5001:5001"
+    #expose:
+    #  - "5001"
+    depends_on:
+      - mongo
+    networks:
+      - frontEnd
+      - backEnd
+
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    #expose:
+    #  - "27017"
+    volumes:
+      - mongoDb:/data/db
+    networks:
+      - backEnd
+
+networks:
+  frontEnd:
+    driver: bridge
+  backEnd:
+    driver: bridge
+
+volumes:
+  mongoDb:
