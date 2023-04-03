@@ -1,6 +1,6 @@
 FROM node:alpine as build
 WORKDIR /client
-COPY package*.json /client
+COPY package*.json /client/
 RUN npm install
 COPY . /client
 RUN npm run build
