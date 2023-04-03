@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: docker_compose Build
         run: docker-compose --build-arg HOST=${{ secrets.HOST  }} -f docker-compose.prod.yml build
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
