@@ -30,10 +30,4 @@ jobs:
           HOSTNAME: ${{ secrets.HOSTNAME  }}
           USER_NAME: ${{ secrets.USER_NAME  }}
 
-        run: ssh -i "${{ secrets.AWS_PRIVATE_KEY  }}" ${USER_NAME}@${HOSTNAME} 
-        cd /home/ubuntu/vite02 && 
-        git checkout master && 
-        git fetch --all && 
-        git reset --hard origin/master 
-        && git pull origin master 
-        && docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST  }} -d --build
+        run: ssh -i "$PRIVATE_KEY" ${USER_NAME}@${HOSTNAME} cd /home/ubuntu/vite02 && git checkout master && git fetch --all && git reset --hard origin/master && git pull origin master && docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST  }} -d --build
