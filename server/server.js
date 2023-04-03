@@ -18,17 +18,17 @@ const cors = require("cors");
 app.use(
   cors({
     origin: process.env.ORIGIN,
-    //credentials: true,
+    credentials: true,
   })
 );
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    transports: ["polling"],
+    transports: ["websocket", "polling"],
     origin: process.env.ORIGIN,
     methods: ["GET", "POST"],
-    credentials: true,
+    //credentials: true,
   },
 });
 
