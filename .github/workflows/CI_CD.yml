@@ -7,7 +7,7 @@ on:
 jobs:
   #First we will see the application build or not , then we will deploy in EC2
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v3
@@ -20,10 +20,10 @@ jobs:
 
   Deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Deploy in EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
@@ -31,8 +31,8 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME  }}
 
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          echo "$PRIVATE_KEY" > PRIVATE_KEY && chmod 400 PRIVATE_KEY
+          ssh -o StrictHostKeyChecking=no -i PRIVATE_KEY ${USER_NAME}@${HOSTNAME} '
 
             #Now we have got the access of EC2 and we will start the deploy .
             mkdir /home/ubuntu/vite02 &&
