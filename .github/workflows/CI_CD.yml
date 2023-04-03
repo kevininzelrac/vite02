@@ -16,9 +16,7 @@ jobs:
         run: docker-compose -f docker-compose.prod.yml build
 
       - name: docker_compose Up
-        env:
-          HOST: ${{ secrets.HOST  }}
-        run: docker-compose -f docker-compose.prod.yml up
+        run: docker-compose -f -env HOST=${{ secrets.HOST  }} docker-compose.prod.yml up
 
   Deploy:
     needs: build
@@ -31,7 +29,6 @@ jobs:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
           HOSTNAME: ${{ secrets.HOSTNAME  }}
           USER_NAME: ${{ secrets.USER_NAME  }}
-          HOST: ${{ secrets.HOST  }}
 
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
@@ -43,4 +40,4 @@ jobs:
             git fetch --all &&
             git reset --hard origin/master &&
             git pull origin master &&
-            docker-compose -f docker-compose.prod.yml up
+            docker-compose -f -env HOST=${{ secrets.HOST  }} docker-compose.prod.yml up
