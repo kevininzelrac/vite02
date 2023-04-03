@@ -16,7 +16,7 @@ jobs:
         run: docker-compose -f docker-compose.prod.yml build
 
       - name: docker_compose Up
-        run: docker-compose -f docker-compose.prod.yml --env HOST=${{ secrets.HOST  }} up
+        run: HOST=${{ secrets.HOST  }} docker-compose -f docker-compose.prod.yml up
 
   Deploy:
     needs: build
@@ -40,4 +40,4 @@ jobs:
             git fetch --all &&
             git reset --hard origin/master &&
             git pull origin master &&
-            docker-compose -f docker-compose.prod.yml --env HOST=${{ secrets.HOST  }} up
+            HOST=${{ secrets.HOST  }} docker-compose -f docker-compose.prod.yml up
