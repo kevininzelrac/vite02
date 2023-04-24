@@ -7,7 +7,7 @@ on:
 jobs:
   #First we will see the application build or not , then we will deploy in EC2
   build:
-    runs-on: ubuntu-22.10
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-22.10
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
