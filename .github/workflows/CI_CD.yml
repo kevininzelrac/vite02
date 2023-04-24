@@ -7,7 +7,7 @@ on:
 jobs:
   #First we will see the application build or not , then we will deploy in EC2
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -18,9 +18,9 @@ jobs:
       - name: docker_compose Up
         run: docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST  }}
 
-  Deploy:
+  deploy:
     needs: build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -31,15 +31,15 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME  }}
 
         run: |
-          echo "$PRIVATE_KEY" > PRIVATE_KEY && chmod 400 PRIVATE_KEY
-          ssh -o StrictHostKeyChecking=no -i PRIVATE_KEY ${USER_NAME}@${HOSTNAME} '
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
             #Now we have got the access of EC2 and we will start the deploy .
-            mkdir /home/ubuntu/vite02 &&
+            #mkdir /home/ubuntu/vite02 &&
             cd /home/ubuntu/vite02 &&
-            git checkout master &&
+            git checkout prod &&
             git fetch --all &&
-            git reset --hard origin/master &&
-            git pull origin master &&
+            git reset --hard origin/prod &&
+            git pull origin prod &&
             docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST  }} -d --build
           '
