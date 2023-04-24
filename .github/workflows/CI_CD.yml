@@ -1,4 +1,3 @@
----
 name: CI/CD vite02
 on:
   push:
@@ -10,9 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: docker_compose Build
-        run: >
-          docker-compose -f docker-compose.prod.yml build --build-arg HOST=${{
-          secrets.HOST }}
+        run: docker-compose -f docker-compose.prod.yml build --build-arg HOST=${{ secrets.HOST }}
       - name: docker_compose Up
         run: docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST }}
   deploy:
@@ -26,7 +23,7 @@ jobs:
           HOSTNAME: ${{ secrets.HOSTNAME }}
           USER_NAME: ${{ secrets.USER_NAME }}
           AWS_DEFAULT_REGION: eu-west-3
-        run: >
+        run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
 
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
