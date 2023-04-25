@@ -29,11 +29,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-15-236-172-168.eu-west-3.compute.amazonaws.com '
 
             cd vite02 &&
+            sudo docker-compose -f docker-compose.prod.yml down &&
             git checkout prod &&
             git fetch --all &&
             git reset --hard origin/prod &&
             cd server &&
-            echo "HOST=${{ secrets.HOST }} \n ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} \n REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }}" > .env && 
+            echo -e "HOST=${{ secrets.HOST }} \n ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} \n REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} \n AUTHOR=KEVIN" > .env && 
             sudo chmod 600 .env && 
             cd .. &&
             sudo docker-compose -f docker-compose.prod.yml build &&
