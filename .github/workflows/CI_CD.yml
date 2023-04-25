@@ -32,5 +32,5 @@ jobs:
             git checkout prod &&
             git fetch --all &&
             git reset --hard origin/prod &&
-            sudo docker-compose run -f docker-compose.prod.yml -e HOST=${{ secrets.HOST  }} -d --build
+            sudo docker-compose -f docker-compose.prod.yml run -d -e HOST=${{ secrets.HOST }} --build
           '
