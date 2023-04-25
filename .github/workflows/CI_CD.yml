@@ -33,8 +33,10 @@ jobs:
             git fetch --all &&
             git reset --hard origin/prod &&
             cd server &&
-            echo "HOST=${{ secrets.HOST }} ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }}" > .env && 
-            chmod 400 .env && 
+            echo "HOST=${{ secrets.HOST }} 
+            ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} 
+            REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }}" > .env && 
+            chmod 600 .env && 
             cd .. &&
             sudo docker-compose -f docker-compose.prod.yml build &&
             sudo docker-compose -f docker-compose.prod.yml up -d
